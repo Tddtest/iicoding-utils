@@ -5,14 +5,16 @@
 })(this, (function (exports) { 'use strict';
 
     var LocalstorageDispatchEvent = (function () {
-        function LocalstorageDispatchEvent(type) {
-            this.storage = window[type];
+        function LocalstorageDispatchEvent() {
+            if (!window || !localStorage || !sessionStorage) {
+                throw new Error('当前环境不支持本地存储方案');
+            }
         }
         LocalstorageDispatchEvent.prototype.set = function (key, value, trigger) {
-            if (this.storage) {
+            if (this.setItem) {
                 try {
                     var newValue = typeof value === 'object' ? JSON.stringify(value) : value;
-                    this.storage.setItem(key, newValue);
+                    this.setItem(key, newValue);
                     LocalstorageDispatchEvent.dispatchEvent('set', trigger, { itemKey: key, itemValue: newValue });
                 }
                 catch (error) {
@@ -27,12 +29,11 @@
         };
         LocalstorageDispatchEvent.prototype.get = function (key) {
             var _a;
-            return ((_a = this.storage) === null || _a === void 0 ? void 0 : _a.getItem(key)) || null;
+            return ((_a = this.getItem) === null || _a === void 0 ? void 0 : _a.call(this, key)) || null;
         };
         LocalstorageDispatchEvent.prototype.get2Json = function (key) {
-            var _a;
-            if (this.storage) {
-                var data = (_a = this.storage) === null || _a === void 0 ? void 0 : _a.getItem(key);
+            if (this.getItem) {
+                var data = this.getItem(key);
                 if (data) {
                     try {
                         return JSON.parse(data);
@@ -44,9 +45,9 @@
             return null;
         };
         LocalstorageDispatchEvent.prototype.remove = function (key, trigger) {
-            if (this.storage) {
+            if (this.removeItem) {
                 try {
-                    this.storage.removeItem(key);
+                    this.removeItem(key);
                     LocalstorageDispatchEvent.dispatchEvent('remove', trigger);
                 }
                 catch (error) {
@@ -63,9 +64,9 @@
             }
         };
         LocalstorageDispatchEvent.prototype.clear = function (trigger) {
-            if (this.storage) {
+            if (this.prototype.clear) {
                 try {
-                    this.storage.clear();
+                    this.prototype.clear();
                     LocalstorageDispatchEvent.dispatchEvent('clear', trigger);
                 }
                 catch (error) {
@@ -86,8 +87,26 @@
         };
         return LocalstorageDispatchEvent;
     }());
-    var _localStorage = new LocalstorageDispatchEvent('localStorage');
-    var _sessionStorage = new LocalstorageDispatchEvent('sessionStorage');
+    var storage = new LocalstorageDispatchEvent();
+    var extendStorageMethod = function (storageType) {
+        if (storageType === void 0) { storageType = 'all'; }
+        if (window) {
+            switch (storageType) {
+                case 'sessionStorage': {
+                    extendMethodByChain(window.sessionStorage, storage);
+                    break;
+                }
+                case 'localStorage': {
+                    extendMethodByChain(window.localStorage, storage);
+                    break;
+                }
+                default: {
+                    extendMethodByChain(window.sessionStorage, storage);
+                    extendMethodByChain(window.localStorage, storage);
+                }
+            }
+        }
+    };
 
     Reflect.appendChain = function (oChain, oProto) {
         if (arguments.length < 2) {
@@ -116,9 +135,7 @@
         Reflect.appendChain(oChain, oProto);
     };
 
-    exports.LocalstorageDispatchEvent = LocalstorageDispatchEvent;
-    exports._localStorage = _localStorage;
-    exports._sessionStorage = _sessionStorage;
     exports.extendMethodByChain = extendMethodByChain;
+    exports.extendStorageMethod = extendStorageMethod;
 
 }));

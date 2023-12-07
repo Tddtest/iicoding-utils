@@ -1,8 +1,16 @@
-import type { TStorageType } from "./type";
+import { type TStorageType } from '@iicoding/utils';
 type TR = Record<string, any>;
+declare global {
+    interface Window {
+        sessionStorage: Storage & typeof storage;
+        localStorage: Storage & typeof storage;
+    }
+}
 declare class LocalstorageDispatchEvent {
-    private readonly storage;
-    constructor(type: TStorageType);
+    private getItem?;
+    private setItem?;
+    private removeItem?;
+    constructor();
     set(key: string, value: any, trigger?: boolean): void;
     setMore(storageObject: TR, trigger?: boolean): void;
     get(key: string): string;
@@ -12,6 +20,6 @@ declare class LocalstorageDispatchEvent {
     clear(trigger?: boolean): void;
     private static dispatchEvent;
 }
-export declare const _localStorage: LocalstorageDispatchEvent;
-export declare const _sessionStorage: LocalstorageDispatchEvent;
-export default LocalstorageDispatchEvent;
+declare const storage: LocalstorageDispatchEvent;
+declare const extendStorageMethod: (storageType?: TStorageType | 'all') => void;
+export default extendStorageMethod;
