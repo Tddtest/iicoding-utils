@@ -156,6 +156,16 @@ var isString = function (str) { return typeof str === 'string'; };
 var isSymbol = function (sym) { return typeof sym === 'symbol'; };
 var isBigInteger = function (num) { return typeof num === 'bigint'; };
 var isBoolean = function (bool) { return typeof bool === 'boolean'; };
+var isObject = function (obj) { return getComplex(obj) === 'object'; };
+var isPlainObject = function (obj) {
+    if (!isObject(obj))
+        return false;
+    var proto = Object.getPrototypeOf(obj);
+    if (!proto)
+        return true;
+    var Ctor = 'constructor' in obj && obj.constructor;
+    return Ctor === Object;
+};
 var getType = function (source) {
     if (source == null) {
         return source + '';
@@ -175,5 +185,7 @@ exports.getType = getType;
 exports.isBigInteger = isBigInteger;
 exports.isBoolean = isBoolean;
 exports.isNumber = isNumber;
+exports.isObject = isObject;
+exports.isPlainObject = isPlainObject;
 exports.isString = isString;
 exports.isSymbol = isSymbol;
