@@ -135,7 +135,51 @@
         Reflect.appendChain(oChain, oProto);
     };
 
+    var capitalize = function (str) {
+        if (str == null || typeof str !== 'string') {
+            return '';
+        }
+        var str2LowerCase = str.toLowerCase();
+        return "".concat(str2LowerCase.substring(0, 1).toUpperCase()).concat(str2LowerCase.substring(1));
+    };
+
+    var getComplex = function (source) {
+        var _a;
+        var typeObject = (_a = {},
+            _a['Object object'] = 'object',
+            _a['Object Function'] = 'function',
+            _a['Object Error'] = 'error',
+            _a['Object Date'] = 'date',
+            _a['Object RegExp'] = 'regExp',
+            _a['Object Array'] = 'array',
+            _a);
+        return typeObject[Object.prototype.toString.call(source)];
+    };
+    var isNumber = function (num) { return typeof num === 'number'; };
+    var isString = function (str) { return typeof str === 'string'; };
+    var isSymbol = function (sym) { return typeof sym === 'symbol'; };
+    var isBigInteger = function (num) { return typeof num === 'bigint'; };
+    var isBoolean = function (bool) { return typeof bool === 'boolean'; };
+    var getType = function (source) {
+        if (source == null) {
+            return source + '';
+        }
+        var typeDetectionResult = typeof source;
+        if (typeDetectionResult === 'object') {
+            return getComplex(source);
+        }
+        return typeDetectionResult;
+    };
+
+    exports.capitalize = capitalize;
     exports.extendMethodByChain = extendMethodByChain;
     exports.extendStorageMethod = extendStorageMethod;
+    exports.getComplex = getComplex;
+    exports.getType = getType;
+    exports.isBigInteger = isBigInteger;
+    exports.isBoolean = isBoolean;
+    exports.isNumber = isNumber;
+    exports.isString = isString;
+    exports.isSymbol = isSymbol;
 
 }));
