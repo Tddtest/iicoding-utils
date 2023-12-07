@@ -1,0 +1,33 @@
+{
+  "name": "@iicoding/utils",
+  "version": "0.0.2",
+  "main": "dist/cjs/index.js",
+  "types": "dist/esm/index.d.ts",
+  "module": "dist/esm/index.js",
+  "type": "module",
+  "exports": {
+    "import": "./dist/esm/index.js",
+    "require": "./dist/cjs/index.js"
+  },
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Tddtest/iicoding-utils.git"
+  },
+  "keywords": [
+    "utils",
+    "dom utils",
+    "react utils",
+    "vue utils",
+    "js utils"
+  ],
+  "bugs": {
+    "url": "https://github.com/Tddtest/iicoding-utils/issues"
+  },
+  "homepage": "https://github.com/Tddtest/iicoding-utils#readme",
+  "umdModuleName": "autoAnimate",
+  "publishConfig": {
+    "access": "public",
+    "registry": "https://registry.npmjs.org/"
+  }
+}
