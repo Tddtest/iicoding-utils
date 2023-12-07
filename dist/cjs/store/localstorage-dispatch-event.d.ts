@@ -1,14 +1,13 @@
 import { type TStorageType } from '@iicoding/utils';
 type TR = Record<string, any>;
-type TStorageExtent = typeof storage;
 interface IExtendMethod {
-    get: TStorageExtent['get'];
-    get2Json: TStorageExtent['get2Json'];
-    set: TStorageExtent['set'];
-    setMore: TStorageExtent['setMore'];
-    remove: TStorageExtent['remove'];
-    removeMore: TStorageExtent['removeMore'];
-    clearAll: TStorageExtent['clearAll'];
+    get: LocalstorageDispatchEvent['get'];
+    get2Json: LocalstorageDispatchEvent['get2Json'];
+    set: LocalstorageDispatchEvent['set'];
+    setMore: LocalstorageDispatchEvent['setMore'];
+    remove: LocalstorageDispatchEvent['remove'];
+    removeMore: LocalstorageDispatchEvent['removeMore'];
+    clearAll: LocalstorageDispatchEvent['clearAll'];
 }
 declare global {
     export interface Window {
@@ -24,13 +23,12 @@ declare class LocalstorageDispatchEvent {
     constructor();
     set(key: string, value: any, trigger?: boolean): void;
     setMore(storageObject: TR, trigger?: boolean): void;
-    get(key: string): string;
-    get2Json(key: string): any;
+    get(key: string): string | null;
+    get2Json(key: string): string | null;
     remove(key: string, trigger?: boolean): void;
     removeMore(removeKeys: string[], trigger?: boolean): void;
     clearAll(trigger?: boolean): void;
     private static dispatchEvent;
 }
-declare const storage: LocalstorageDispatchEvent;
 export declare const extendStorageMethod: (storageType?: TStorageType | 'all') => void;
 export default extendStorageMethod;
