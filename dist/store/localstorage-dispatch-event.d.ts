@@ -21,5 +21,5 @@ declare class LocalstorageDispatchEvent {
     private static dispatchEvent;
 }
 declare const storage: LocalstorageDispatchEvent;
-declare const extendStorageMethod: (storageType?: TStorageType | 'all') => void;
+export declare const extendStorageMethod: (storageType?: TStorageType | 'all') => void;
 export default extendStorageMethod;
