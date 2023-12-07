@@ -98,7 +98,6 @@
                 }
                 case 'localStorage': {
                     extendMethodByChain(window.localStorage, storage);
-                    window.sessionStorage.get2Json('aa');
                     break;
                 }
                 default: {
