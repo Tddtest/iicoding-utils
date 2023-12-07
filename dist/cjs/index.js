@@ -59,10 +59,10 @@ var LocalstorageDispatchEvent = (function () {
             LocalstorageDispatchEvent.dispatchEvent('remove', trigger);
         }
     };
-    LocalstorageDispatchEvent.prototype.clear = function (trigger) {
-        if (this.prototype.clear) {
+    LocalstorageDispatchEvent.prototype.clearAll = function (trigger) {
+        if (this.clear) {
             try {
-                this.prototype.clear();
+                this.clear();
                 LocalstorageDispatchEvent.dispatchEvent('clear', trigger);
             }
             catch (error) {
@@ -94,6 +94,7 @@ var extendStorageMethod = function (storageType) {
             }
             case 'localStorage': {
                 extendMethodByChain(window.localStorage, storage);
+                window.sessionStorage.get2Json('aa');
                 break;
             }
             default: {
