@@ -4,3 +4,4 @@ export { default as extendStorageMethod } from './store/localstorage-dispatch-ev
 export * from './reflect-extend';
 export * from './string';
 export * from './type-detection';
+export * from './hof/compose';
