@@ -2,8 +2,8 @@
 
 var LocalstorageDispatchEvent = (function () {
     function LocalstorageDispatchEvent() {
-        if (!window || !localStorage || !sessionStorage) {
-            throw new Error('当前环境不支持本地存储方案');
+        if (!global || !global.localStorage || !global.sessionStorage) {
+            console.error('当前环境不支持本地存储方案');
         }
     }
     LocalstorageDispatchEvent.prototype.set = function (key, value, trigger) {
@@ -236,6 +236,15 @@ var composeAsync = function (middleware) {
     return function (params) { return dispatch(0, params); };
 };
 
+var sleep = function (time) {
+    return new Promise(function (resolve) {
+        var timer = setTimeout(function () {
+            clearTimeout === null || clearTimeout === void 0 ? void 0 : clearTimeout(timer);
+            resolve(true);
+        }, time);
+    });
+};
+
 exports.capitalize = capitalize;
 exports.composeAsync = composeAsync;
 exports.extendMethodByChain = extendMethodByChain;
@@ -249,3 +258,4 @@ exports.isObject = isObject;
 exports.isPlainObject = isPlainObject;
 exports.isString = isString;
 exports.isSymbol = isSymbol;
+exports.sleep = sleep;

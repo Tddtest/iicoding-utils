@@ -5,3 +5,4 @@ export * from './reflect-extend';
 export * from './string';
 export * from './type-detection';
 export * from './hof/compose';
+export * from './helper';
