@@ -1,10 +1,13 @@
 {
   "name": "@iicoding/utils",
-  "version": "0.0.18",
-  "main": "dist/cjs",
+  "version": "0.0.19",
+  "main": "dist/cjs/index.js",
   "types": "dist/esm/index.d.ts",
   "module": "dist/esm/index.js",
-  "exports": "./dist/cjs",
+  "exports": {
+    "import": "./dist/esm/index.js",
+    "require": "./dist/cjs/index.js"
+  },
   "license": "MIT",
   "repository": {
     "type": "git",
