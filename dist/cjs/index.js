@@ -148,23 +148,10 @@ var getComplex = function (source) {
         _a['Object Date'] = 'date',
         _a['Object RegExp'] = 'regExp',
         _a['Object Array'] = 'array',
+        _a['Object Blob'] = 'blob',
+        _a['Object Promise'] = 'promise',
         _a);
     return typeObject[Object.prototype.toString.call(source)];
-};
-var isNumber = function (num) { return typeof num === 'number'; };
-var isString = function (str) { return typeof str === 'string'; };
-var isSymbol = function (sym) { return typeof sym === 'symbol'; };
-var isBigInteger = function (num) { return typeof num === 'bigint'; };
-var isBoolean = function (bool) { return typeof bool === 'boolean'; };
-var isObject = function (obj) { return getComplex(obj) === 'object'; };
-var isPlainObject = function (obj) {
-    if (!isObject(obj))
-        return false;
-    var proto = Object.getPrototypeOf(obj);
-    if (!proto)
-        return true;
-    var Ctor = 'constructor' in obj && obj.constructor;
-    return Ctor === Object;
 };
 var getType = function (source) {
     if (source == null) {
@@ -175,6 +162,29 @@ var getType = function (source) {
         return getComplex(source);
     }
     return typeDetectionResult;
+};
+var isNumber = function (num) { return typeof num === 'number'; };
+var isString = function (str) { return typeof str === 'string'; };
+var isSymbol = function (sym) { return typeof sym === 'symbol'; };
+var isBigInteger = function (num) { return typeof num === 'bigint'; };
+var isBoolean = function (bool) { return typeof bool === 'boolean'; };
+var isObject = function (obj) { return getComplex(obj) === 'object'; };
+var isBlob = function (blob) { return getComplex(blob) === 'blob'; };
+var isDate = function (date) { return getComplex(date) === 'date'; };
+var isPlainObject = function (obj) {
+    if (!isObject(obj))
+        return false;
+    var proto = Object.getPrototypeOf(obj);
+    if (!proto)
+        return true;
+    var Ctor = 'constructor' in obj && obj.constructor;
+    return Ctor === Object;
+};
+var isFunction = function (func) { return getType(func) === 'function'; };
+var isPromise = function (source) {
+    if (!isObject(source))
+        return false;
+    return getComplex(source) === 'promise' && isFunction(source['then']) && isFunction(source['catch']);
 };
 
 /******************************************************************************
@@ -244,18 +254,282 @@ var sleep = function (time) {
         }, time);
     });
 };
+var phoneDesensitization = function (phone) {
+    if (!isNumber(phone) && !isString(phone))
+        return '';
+    phone = '' + phone;
+    return phone.replace(/^(\d{3})\d{4}(\d{4})$/, "$1****$2");
+};
+var credentialDesensitization = function (credential) {
+    if (!isNumber(credential) && !isString(credential))
+        return '';
+    var len = credential.length;
+    var regExp, replaceExp;
+    if (len < 5) {
+        regExp = /^(\w{1})/;
+        replaceExp = "*";
+    }
+    else if (len < 9) {
+        regExp = /^(\w{4})/;
+        replaceExp = "****";
+    }
+    else if (len < 15) {
+        regExp = /^(\w{2})\w*(\w{2})$/;
+        replaceExp = "$1****$2";
+    }
+    else {
+        regExp = /^(\w{6})\w*(\w{4})$/;
+        replaceExp = "$1****$2";
+    }
+    return credential.replace(regExp, replaceExp);
+};
+var IdCardGender = function (idCard, placeholder) {
+    if (!isNumber(idCard) && !isString(idCard))
+        return placeholder;
+    var len = idCard.length;
+    var genderNum = '';
+    if (len === 15)
+        genderNum = idCard.slice(-1);
+    if (len === 18)
+        genderNum = idCard.slice(-2, -1);
+    if (genderNum === '')
+        return placeholder;
+    return parseInt(genderNum) % 2 === 1 ? '0' : '1';
+};
+var toFormData = function (target) {
+    var fd = new FormData();
+    if (!FormData)
+        return fd;
+    Object.keys(target).forEach(function (key) {
+        var value = target[key];
+        if (isObject(value) && !isBlob(target)) {
+            value = JSON.stringify(value);
+        }
+        else {
+            value = value.toString();
+        }
+        fd.append(key, value);
+    });
+    return fd;
+};
+var getRandomColor = function (color) {
+    if ((color === null || color === void 0 ? void 0 : color.length) >= 6) {
+        if (color.startsWith('#'))
+            return color;
+        return "#".concat(color);
+    }
+    var hex = Math.floor(Math.random() * 16777216).toString(16);
+    while (hex.length < 6) {
+        hex = '0' + hex;
+    }
+    return '#' + hex;
+};
+var color2hexadecimal = function (hex, onlyValue) {
+    if (onlyValue === void 0) { onlyValue = false; }
+    var rgb = [];
+    if (/^\#[0-9A-F]{3}$/i.test(hex)) {
+        var sixHex_1 = '#';
+        hex.replace(/[0-9A-F]/ig, function (kw) {
+            sixHex_1 += kw + kw;
+            return kw;
+        });
+        hex = sixHex_1;
+    }
+    if (/^#[0-9A-F]{6}$/i.test(hex)) {
+        hex.replace(/[0-9A-F]{2}/ig, function (kw) {
+            rgb.push(eval("0x".concat(kw)));
+            return kw;
+        });
+    }
+    else if (/^#[0-9A-F]{8}$/i.test(hex)) {
+        var opacity = hex.slice(7);
+        hex = hex.slice(0, 7);
+        hex.replace(/[0-9A-F]{2}/ig, function (kw) {
+            rgb.push(eval("0x".concat(kw)));
+            return kw;
+        });
+        if (!isNaN(+opacity)) {
+            rgb.push(".".concat(opacity));
+        }
+    }
+    else {
+        rgb.push(0, 0, 0);
+    }
+    return onlyValue ? rgb : "rgb(".concat(rgb.join(','), ")");
+};
+var hexadecimal2color = function (hexStr) {
+    var reg = /^#([0-9a-fA-f]{3}|[0-9a-fA-f]{6}|[0-9a-fA-f]{8}|[0-9a-fA-f]{6}[0-9]{2})$/;
+    if (reg.test(hexStr.toString())) {
+        return hexStr;
+    }
+    else {
+        var temp = [];
+        var strHex = "#";
+        var commonCondition_1 = function (str) {
+            var x = str.toString().trim();
+            if (x.startsWith('.')) {
+                x = x.slice(1);
+            }
+            return (isString(x) || isNumber(x)) && !isNaN(+x);
+        };
+        var dataProcessing = function (source) {
+            return source.filter(function (x) { return commonCondition_1(x); }).map(function (item) {
+                var x = item.trim();
+                if (x.startsWith('0') || x.startsWith('.')) {
+                    return "0.".concat(x.split('.').at(-1));
+                }
+                if (+x > 255) {
+                    return '255';
+                }
+                return parseInt(x, 10) + '';
+            });
+        };
+        if (isString(hexStr)) {
+            temp = dataProcessing(hexStr.replace(/(?:\(|\)|rgba|rgb|RGBA|RGB)*/g, "").split(','));
+        }
+        if (Array.isArray(hexStr)) {
+            if (hexStr.length === 1 && isString(hexStr[0])) {
+                return hexadecimal2color(hexStr[0]);
+            }
+            temp = dataProcessing(hexStr);
+        }
+        if (temp.length > 2) {
+            temp = temp.slice(0, 3);
+            for (var i = 0; i < temp.length; i++) {
+                if (i !== 3) {
+                    if (temp[i] === "0") {
+                        strHex += "00";
+                    }
+                    else {
+                        var newItem = Number(temp[i]).toString(16);
+                        if (newItem.length < 2) {
+                            newItem = "0" + newItem;
+                        }
+                        strHex += newItem;
+                    }
+                }
+                else {
+                    strHex += temp[i] === "0" ? "" : Number(temp[i]) * 100;
+                }
+            }
+            strHex = strHex.toUpperCase();
+        }
+        return strHex;
+    }
+};
 
+var spacePatten = /^[\u4e00-\u9fa5a-zA-Z0-9`~!@#$%^&*()_+-=?:{},.\\/;<>[\]·！￥……（——）：；"'“”‘’、，|《。》？【】]*$/;
+var isSingleNumOrLetter = new RegExp('(?=.*[0-9])(?=.*[a-zA-Z])');
+var phonePattern = /^1[3456789]\d{9}$/;
+var emailPattern = /^[A-Za-z\d]+([-_.][A-Za-z\d]+)*@([A-Za-z\d]+[-.])+[A-Za-z\d]{2,4}$/;
+var urlPattern = /^((https|http|ftp|rtsp|mms):\/\/)(([0-9a-zA-Z_!~*'().&=+$%-]+: )?[0-9a-zA-Z_!~*'().&=+$%-]+@)?(([0-9]{1,3}.){3}[0-9]{1,3}|([0-9a-zA-Z_!~*'()-]+.)*([0-9a-zA-Z][0-9a-zA-Z-]{0,61})?[0-9a-zA-Z].[a-zA-Z]{2,6})(:[0-9]{1,4})?((\/?)|(\/[0-9a-zA-Z_!~*'().;?:@&=+$,%#-]+)+\/?)$/;
+var urlPatternExtend = function (options) {
+    var _a = options.httpPrefix, httpPrefix = _a === void 0 ? 'https|http|ftp|rtsp|mms' : _a, _b = options.mateLocalhost, mateLocalhost = _b === void 0 ? true : _b;
+    return "^((".concat(httpPrefix, ")://)?")
+        + '(([0-9]{1,3}\\.){3}[0-9]{1,3}'
+        + '|'
+        + mateLocalhost ? '' : '(localhost)|'
+        + '([\\w_!~*\'()-]+\\.)*'
+        + '[\\w./-]+\\.'
+        + '[a-zA-Z]{1,6})'
+        + '(:[0-9]{1,5})?'
+        + '((/?)|'
+        + '(/[\\w_!~*\'()\\.;?:@&=+$ ,%#-]+)+/?)$';
+};
+
+var isLegalEmail = function (email) { return emailPattern.test(email); };
+var isIllegalEmail = function (email) { return !emailPattern.test(email); };
+var isLegalPhone = function (phone) { return phonePattern.test(phone); };
+var isIllegalPhone = function (phone) { return !phonePattern.test(phone); };
+var isLegalUrl = function (url) { return urlPattern.test(url); };
+var isIllegalUrl = function (url) { return !urlPattern.test(url); };
+var isInInterval = function (source, interval) {
+    if (!Array.isArray(interval))
+        return false;
+    var first = interval[0], last = interval[1];
+    if (!isNumber(source) || !isNumber(first) || !isNumber(last))
+        return false;
+    return source < first || source > last;
+};
+
+var getCookie = function (cookieKey) {
+    var cookie = {};
+    if (document) {
+        var cookieStr = document.cookie;
+        if (cookieStr) {
+            var cookieMap = cookieStr.split('; ');
+            for (var i = 0; i < cookieMap.length; i++) {
+                var current = cookieMap[i];
+                var _a = current.split('='), key = _a[0], value = _a[1];
+                try {
+                    key = decodeURIComponent(key);
+                    value = decodeURIComponent(value);
+                }
+                catch (error) {
+                    console.log('value decodeURIComponent error value=' + value);
+                }
+                if (value) {
+                    cookie[key] = value;
+                }
+            }
+        }
+    }
+    if (cookieKey) {
+        return cookie[cookieKey];
+    }
+    return cookie;
+};
+var setCookie = function (key, value, expires) {
+    var cookie = encodeURIComponent(key) + '=' + encodeURIComponent(value);
+    if (isNumber(expires)) {
+        var expiresDate = new Date();
+        expiresDate.setTime(expiresDate.getTime() + 24 * 60 * 60 * 1000 * expires);
+        cookie += ";path=/;expires=" + expiresDate.toUTCString();
+    }
+    document.cookie = cookie;
+};
+var deleteCookie = function (key) {
+    setCookie(key, '', -1);
+};
+
+exports.IdCardGender = IdCardGender;
 exports.capitalize = capitalize;
+exports.color2hexadecimal = color2hexadecimal;
 exports.composeAsync = composeAsync;
+exports.credentialDesensitization = credentialDesensitization;
+exports.deleteCookie = deleteCookie;
+exports.emailPattern = emailPattern;
 exports.extendMethodByChain = extendMethodByChain;
 exports.extendStorageMethod = extendStorageMethod;
 exports.getComplex = getComplex;
+exports.getCookie = getCookie;
+exports.getRandomColor = getRandomColor;
 exports.getType = getType;
+exports.hexadecimal2color = hexadecimal2color;
 exports.isBigInteger = isBigInteger;
+exports.isBlob = isBlob;
 exports.isBoolean = isBoolean;
+exports.isDate = isDate;
+exports.isFunction = isFunction;
+exports.isIllegalEmail = isIllegalEmail;
+exports.isIllegalPhone = isIllegalPhone;
+exports.isIllegalUrl = isIllegalUrl;
+exports.isInInterval = isInInterval;
+exports.isLegalEmail = isLegalEmail;
+exports.isLegalPhone = isLegalPhone;
+exports.isLegalUrl = isLegalUrl;
 exports.isNumber = isNumber;
 exports.isObject = isObject;
 exports.isPlainObject = isPlainObject;
+exports.isPromise = isPromise;
+exports.isSingleNumOrLetter = isSingleNumOrLetter;
 exports.isString = isString;
 exports.isSymbol = isSymbol;
+exports.phoneDesensitization = phoneDesensitization;
+exports.phonePattern = phonePattern;
+exports.setCookie = setCookie;
 exports.sleep = sleep;
+exports.spacePatten = spacePatten;
+exports.toFormData = toFormData;
+exports.urlPattern = urlPattern;
+exports.urlPatternExtend = urlPatternExtend;

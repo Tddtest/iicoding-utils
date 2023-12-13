@@ -7,3 +7,6 @@ export * from './string';
 export * from './type-detection';
 export * from './hof/compose';
 export * from './helper';
+export * from './regular-expression';
+export * from './validate';
+export * from './browser';
