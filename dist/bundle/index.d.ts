@@ -10,3 +10,4 @@ export * from './helper';
 export * from './regular-expression';
 export * from './validate';
 export * from './browser';
+export * from './console';

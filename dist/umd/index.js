@@ -453,7 +453,7 @@
         var first = interval[0], last = interval[1];
         if (!isNumber(source) || !isNumber(first) || !isNumber(last))
             return false;
-        return source < first || source > last;
+        return source >= first || source <= last;
     };
 
     var getCookie = function (cookieKey) {
@@ -496,10 +496,121 @@
         setCookie(key, '', -1);
     };
 
+    var log = function (style) {
+        var args = [];
+        for (var _i = 1; _i < arguments.length; _i++) {
+            args[_i - 1] = arguments[_i];
+        }
+        var logStr = '';
+        var logArr = [logStr];
+        var objStyle = "\n      display: inline-block;\n      width: 1px;\n      margin: 0 4px;\n      ";
+        args.forEach(function (item) {
+            if (!isObject(item)) {
+                logStr += '%c %s ';
+                logArr.push(style, item);
+            }
+            else {
+                logStr += '%c %O ';
+                logArr.push(objStyle, item);
+            }
+        });
+        logArr[0] = logStr;
+        console.log.apply(console, logArr);
+    };
+    var baseStyle = 'display:inline-black;margin: 0 10px;border-radius: 4px;padding: 3px 6px;font-weight:bold;font-size: 14px;';
+    var colorful = function () {
+        var args = [];
+        for (var _i = 0; _i < arguments.length; _i++) {
+            args[_i] = arguments[_i];
+        }
+        var style = "".concat(baseStyle, "\n      color: #fff;\n      background: linear-gradient(to right, #ff4361 30%, #fe7deb, #ce6dff 100%);\n      ");
+        log.apply(void 0, __spreadArray([style], args, false));
+    };
+    var blue = function () {
+        var args = [];
+        for (var _i = 0; _i < arguments.length; _i++) {
+            args[_i] = arguments[_i];
+        }
+        var style = "".concat(baseStyle, "color: #4096ff;background:#fff");
+        log.apply(void 0, __spreadArray([style], args, false));
+    };
+    var blueBg = function () {
+        var args = [];
+        for (var _i = 0; _i < arguments.length; _i++) {
+            args[_i] = arguments[_i];
+        }
+        var style = "".concat(baseStyle, "color: #fff;background:#4096ff");
+        log.apply(void 0, __spreadArray([style], args, false));
+    };
+    var yellow = function () {
+        var args = [];
+        for (var _i = 0; _i < arguments.length; _i++) {
+            args[_i] = arguments[_i];
+        }
+        var style = "".concat(baseStyle, "color: #FAAD14;background:#fff");
+        log.apply(void 0, __spreadArray([style], args, false));
+    };
+    var yellowBg = function () {
+        var args = [];
+        for (var _i = 0; _i < arguments.length; _i++) {
+            args[_i] = arguments[_i];
+        }
+        var style = "".concat(baseStyle, "color: #fff;background:#FAAD14");
+        log.apply(void 0, __spreadArray([style], args, false));
+    };
+    var red = function () {
+        var args = [];
+        for (var _i = 0; _i < arguments.length; _i++) {
+            args[_i] = arguments[_i];
+        }
+        var style = "".concat(baseStyle, "color: #ff4d4f;background:#fff");
+        log.apply(void 0, __spreadArray([style], args, false));
+    };
+    var redBg = function () {
+        var args = [];
+        for (var _i = 0; _i < arguments.length; _i++) {
+            args[_i] = arguments[_i];
+        }
+        var style = "".concat(baseStyle, "color: #fff;background:#ff4d4f");
+        log.apply(void 0, __spreadArray([style], args, false));
+    };
+    var green = function () {
+        var args = [];
+        for (var _i = 0; _i < arguments.length; _i++) {
+            args[_i] = arguments[_i];
+        }
+        var style = "".concat(baseStyle, "color: green;background:#fff");
+        log.apply(void 0, __spreadArray([style], args, false));
+    };
+    var greenBg = function () {
+        var args = [];
+        for (var _i = 0; _i < arguments.length; _i++) {
+            args[_i] = arguments[_i];
+        }
+        var style = "".concat(baseStyle, "color: #fff;background:green");
+        log.apply(void 0, __spreadArray([style], args, false));
+    };
+    var consoleExtend = function () {
+        if (!console)
+            return;
+        extendMethodByChain(console, {
+            colorful: colorful,
+            red: red,
+            blue: blue,
+            green: green,
+            yellow: yellow,
+            redBg: redBg,
+            blueBg: blueBg,
+            greenBg: greenBg,
+            yellowBg: yellowBg,
+        });
+    };
+
     exports.IdCardGender = IdCardGender;
     exports.capitalize = capitalize;
     exports.color2hexadecimal = color2hexadecimal;
     exports.composeAsync = composeAsync;
+    exports.consoleExtend = consoleExtend;
     exports.credentialDesensitization = credentialDesensitization;
     exports.deleteCookie = deleteCookie;
     exports.emailPattern = emailPattern;
