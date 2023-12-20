@@ -9,6 +9,7 @@ export declare const isBoolean: (bool: unknown) => bool is boolean;
 export declare const isObject: (obj: unknown) => obj is object;
 export declare const isBlob: (blob: unknown) => blob is Blob;
 export declare const isDate: (date: unknown) => date is Date;
+export declare const isHTMLElement: (element: unknown) => element is HTMLElement;
 export declare const isPlainObject: (obj: unknown) => obj is object;
 export declare const isFunction: (func: unknown) => boolean;
 export declare const isPromise: (source: unknown) => boolean;

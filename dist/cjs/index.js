@@ -142,14 +142,14 @@ var capitalize = function (str) {
 var getComplex = function (source) {
     var _a;
     var typeObject = (_a = {},
-        _a['object Object'] = 'object',
-        _a['object Function'] = 'function',
-        _a['object Error'] = 'error',
-        _a['object Date'] = 'date',
-        _a['object RegExp'] = 'regExp',
-        _a['object Array'] = 'array',
-        _a['object Blob'] = 'blob',
-        _a['object Promise'] = 'promise',
+        _a['[object Object]'] = 'object',
+        _a['[object Function]'] = 'function',
+        _a['[object Error]'] = 'error',
+        _a['[object Date]'] = 'date',
+        _a['[object RegExp]'] = 'regExp',
+        _a['[object Array]'] = 'array',
+        _a['[object Blob]'] = 'blob',
+        _a['[object Promise]'] = 'promise',
         _a);
     return typeObject[Object.prototype.toString.call(source)];
 };
@@ -171,6 +171,7 @@ var isBoolean = function (bool) { return typeof bool === 'boolean'; };
 var isObject = function (obj) { return getComplex(obj) === 'object'; };
 var isBlob = function (blob) { return getComplex(blob) === 'blob'; };
 var isDate = function (date) { return getComplex(date) === 'date'; };
+var isHTMLElement = function (element) { return element instanceof HTMLElement; };
 var isPlainObject = function (obj) {
     if (!isObject(obj))
         return false;
@@ -755,6 +756,7 @@ exports.isBlob = isBlob;
 exports.isBoolean = isBoolean;
 exports.isDate = isDate;
 exports.isFunction = isFunction;
+exports.isHTMLElement = isHTMLElement;
 exports.isIllegalEmail = isIllegalEmail;
 exports.isIllegalPhone = isIllegalPhone;
 exports.isIllegalUrl = isIllegalUrl;

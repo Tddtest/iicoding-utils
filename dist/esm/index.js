@@ -140,14 +140,14 @@ var capitalize = function (str) {
 var getComplex = function (source) {
     var _a;
     var typeObject = (_a = {},
-        _a['object Object'] = 'object',
-        _a['object Function'] = 'function',
-        _a['object Error'] = 'error',
-        _a['object Date'] = 'date',
-        _a['object RegExp'] = 'regExp',
-        _a['object Array'] = 'array',
-        _a['object Blob'] = 'blob',
-        _a['object Promise'] = 'promise',
+        _a['[object Object]'] = 'object',
+        _a['[object Function]'] = 'function',
+        _a['[object Error]'] = 'error',
+        _a['[object Date]'] = 'date',
+        _a['[object RegExp]'] = 'regExp',
+        _a['[object Array]'] = 'array',
+        _a['[object Blob]'] = 'blob',
+        _a['[object Promise]'] = 'promise',
         _a);
     return typeObject[Object.prototype.toString.call(source)];
 };
@@ -169,6 +169,7 @@ var isBoolean = function (bool) { return typeof bool === 'boolean'; };
 var isObject = function (obj) { return getComplex(obj) === 'object'; };
 var isBlob = function (blob) { return getComplex(blob) === 'blob'; };
 var isDate = function (date) { return getComplex(date) === 'date'; };
+var isHTMLElement = function (element) { return element instanceof HTMLElement; };
 var isPlainObject = function (obj) {
     if (!isObject(obj))
         return false;
@@ -732,4 +733,4 @@ var consoleExtend = function () {
     });
 };
 
-export { IdCardGender, capitalize, color2hexadecimal, composeAsync, consoleExtend, copy, credentialDesensitization, deleteCookie, emailPattern, extendMethodByChain, extendStorageMethod, getComplex, getCookie, getRandomColor, getType, hexadecimal2color, isBigInteger, isBlob, isBoolean, isDate, isFunction, isIllegalEmail, isIllegalPhone, isIllegalUrl, isImage, isInInterval, isLegalEmail, isLegalPhone, isLegalUrl, isNumber, isObject, isPlainObject, isPromise, isSingleNumOrLetter, isString, isSymbol, phoneDesensitization, phonePattern, setCookie, sleep, spacePatten, toFormData, urlPattern, urlPatternExtend };
+export { IdCardGender, capitalize, color2hexadecimal, composeAsync, consoleExtend, copy, credentialDesensitization, deleteCookie, emailPattern, extendMethodByChain, extendStorageMethod, getComplex, getCookie, getRandomColor, getType, hexadecimal2color, isBigInteger, isBlob, isBoolean, isDate, isFunction, isHTMLElement, isIllegalEmail, isIllegalPhone, isIllegalUrl, isImage, isInInterval, isLegalEmail, isLegalPhone, isLegalUrl, isNumber, isObject, isPlainObject, isPromise, isSingleNumOrLetter, isString, isSymbol, phoneDesensitization, phonePattern, setCookie, sleep, spacePatten, toFormData, urlPattern, urlPatternExtend };
