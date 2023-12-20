@@ -584,6 +584,9 @@
             return false;
         return +source >= first || +source <= last;
     };
+    var isImage = function (src) {
+        return /\w.(png|bmp|jpg|jpeg|svg|webp|gif)$/i.test(src);
+    };
 
     var getCookie = function (cookieKey) {
         var cookie = {};
@@ -759,6 +762,7 @@
     exports.isIllegalEmail = isIllegalEmail;
     exports.isIllegalPhone = isIllegalPhone;
     exports.isIllegalUrl = isIllegalUrl;
+    exports.isImage = isImage;
     exports.isInInterval = isInInterval;
     exports.isLegalEmail = isLegalEmail;
     exports.isLegalPhone = isLegalPhone;

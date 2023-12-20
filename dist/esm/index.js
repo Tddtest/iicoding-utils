@@ -578,6 +578,9 @@ var isInInterval = function (source, interval) {
         return false;
     return +source >= first || +source <= last;
 };
+var isImage = function (src) {
+    return /\w.(png|bmp|jpg|jpeg|svg|webp|gif)$/i.test(src);
+};
 
 var getCookie = function (cookieKey) {
     var cookie = {};
@@ -729,4 +732,4 @@ var consoleExtend = function () {
     });
 };
 
-export { IdCardGender, capitalize, color2hexadecimal, composeAsync, consoleExtend, copy, credentialDesensitization, deleteCookie, emailPattern, extendMethodByChain, extendStorageMethod, getComplex, getCookie, getRandomColor, getType, hexadecimal2color, isBigInteger, isBlob, isBoolean, isDate, isFunction, isIllegalEmail, isIllegalPhone, isIllegalUrl, isInInterval, isLegalEmail, isLegalPhone, isLegalUrl, isNumber, isObject, isPlainObject, isPromise, isSingleNumOrLetter, isString, isSymbol, phoneDesensitization, phonePattern, setCookie, sleep, spacePatten, toFormData, urlPattern, urlPatternExtend };
+export { IdCardGender, capitalize, color2hexadecimal, composeAsync, consoleExtend, copy, credentialDesensitization, deleteCookie, emailPattern, extendMethodByChain, extendStorageMethod, getComplex, getCookie, getRandomColor, getType, hexadecimal2color, isBigInteger, isBlob, isBoolean, isDate, isFunction, isIllegalEmail, isIllegalPhone, isIllegalUrl, isImage, isInInterval, isLegalEmail, isLegalPhone, isLegalUrl, isNumber, isObject, isPlainObject, isPromise, isSingleNumOrLetter, isString, isSymbol, phoneDesensitization, phonePattern, setCookie, sleep, spacePatten, toFormData, urlPattern, urlPatternExtend };
