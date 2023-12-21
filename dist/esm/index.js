@@ -372,6 +372,12 @@ function copy(text, options) {
     return success;
 }
 
+var freeGlobal = typeof global === 'object' && global !== null && global.Object === Object && global;
+
+var freeGlobalThis = typeof globalThis === 'object' && globalThis !== null && globalThis.Object === Object && globalThis;
+var freeSelf = typeof self === 'object' && self !== null && self.Object === Object && self;
+freeGlobalThis || freeGlobal || freeSelf || Function('return this')();
+
 var sleep = function (time) {
     return new Promise(function (resolve) {
         var timer = setTimeout(function () {
