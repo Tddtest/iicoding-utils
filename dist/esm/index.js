@@ -376,7 +376,68 @@ var freeGlobal = typeof global === 'object' && global !== null && global.Object 
 
 var freeGlobalThis = typeof globalThis === 'object' && globalThis !== null && globalThis.Object === Object && globalThis;
 var freeSelf = typeof self === 'object' && self !== null && self.Object === Object && self;
-freeGlobalThis || freeGlobal || freeSelf || Function('return this')();
+var root = freeGlobalThis || freeGlobal || freeSelf || Function('return this')();
+
+function debounce(func, wait, options) {
+    var lastArgs;
+    var lastThis;
+    var maxWait;
+    var result;
+    var timerId;
+    var maxing = false;
+    var trailing = true;
+    var useRAF = !wait && wait !== 0 && typeof root.requestAnimationFrame === 'function';
+    if (typeof func !== 'function') {
+        throw new TypeError('Expected a function');
+    }
+    wait = +wait || 0;
+    if (isObject(options)) {
+        !!options.leading;
+        maxing = 'maxWait' in options;
+        maxWait = maxing ? Math.max(+options.maxWait || 0, wait) : maxWait;
+        trailing = 'trailing' in options ? !!options.trailing : trailing;
+    }
+    function invokeFunc(time) {
+        var args = lastArgs;
+        var thisArg = lastThis;
+        lastArgs = lastThis = undefined;
+        result = func.apply(thisArg, args);
+        return result;
+    }
+    function cancelTimer(id) {
+        if (useRAF) {
+            root.cancelAnimationFrame(id);
+            return;
+        }
+        clearTimeout(id);
+    }
+    function trailingEdge(time) {
+        timerId = undefined;
+        if (trailing && lastArgs) {
+            return invokeFunc();
+        }
+        lastArgs = lastThis = undefined;
+        return result;
+    }
+    function cancel() {
+        if (timerId !== undefined) {
+            cancelTimer(timerId);
+        }
+        lastArgs = lastThis = timerId = undefined;
+    }
+    function flush() {
+        return timerId === undefined ? result : trailingEdge();
+    }
+    function pending() {
+        return timerId !== undefined;
+    }
+    function debounced() {
+    }
+    debounced.cancel = cancel;
+    debounced.flush = flush;
+    debounced.pending = pending;
+    return debounced;
+}
 
 var sleep = function (time) {
     return new Promise(function (resolve) {
@@ -739,4 +800,4 @@ var consoleExtend = function () {
     });
 };
 
-export { IdCardGender, capitalize, color2hexadecimal, composeAsync, consoleExtend, copy, credentialDesensitization, deleteCookie, emailPattern, extendMethodByChain, extendStorageMethod, getComplex, getCookie, getRandomColor, getType, hexadecimal2color, isBigInteger, isBlob, isBoolean, isDate, isFunction, isHTMLElement, isIllegalEmail, isIllegalPhone, isIllegalUrl, isImage, isInInterval, isLegalEmail, isLegalPhone, isLegalUrl, isNumber, isObject, isPlainObject, isPromise, isSingleNumOrLetter, isString, isSymbol, phoneDesensitization, phonePattern, setCookie, sleep, spacePatten, toFormData, urlPattern, urlPatternExtend };
+export { IdCardGender, capitalize, color2hexadecimal, composeAsync, consoleExtend, copy, credentialDesensitization, debounce, deleteCookie, emailPattern, extendMethodByChain, extendStorageMethod, getComplex, getCookie, getRandomColor, getType, hexadecimal2color, isBigInteger, isBlob, isBoolean, isDate, isFunction, isHTMLElement, isIllegalEmail, isIllegalPhone, isIllegalUrl, isImage, isInInterval, isLegalEmail, isLegalPhone, isLegalUrl, isNumber, isObject, isPlainObject, isPromise, isSingleNumOrLetter, isString, isSymbol, phoneDesensitization, phonePattern, setCookie, sleep, spacePatten, toFormData, urlPattern, urlPatternExtend };
