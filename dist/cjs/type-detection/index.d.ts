@@ -1,4 +1,4 @@
-export type ComplexResult = 'object' | 'function' | 'error' | 'date' | 'regExp' | 'array' | 'blob' | 'promise';
+export type ComplexResult = 'object' | 'function' | 'error' | 'date' | 'regExp' | 'array' | 'blob' | 'promise' | 'buffer';
 export declare const getComplex: (source: unknown) => ComplexResult | undefined;
 export declare const getType: (source: unknown) => string;
 export declare const isNumber: (num: unknown) => num is number;
@@ -9,7 +9,8 @@ export declare const isBoolean: (bool: unknown) => bool is boolean;
 export declare const isObject: (obj: unknown) => obj is object;
 export declare const isBlob: (blob: unknown) => blob is Blob;
 export declare const isDate: (date: unknown) => date is Date;
+export declare const isArrayBuffer: (buffer: unknown) => buffer is ArrayBuffer;
 export declare const isHTMLElement: (element: unknown) => element is HTMLElement;
 export declare const isPlainObject: (obj: unknown) => obj is object;
-export declare const isFunction: (func: unknown) => boolean;
-export declare const isPromise: (source: unknown) => boolean;
+export declare const isFunction: (func: unknown) => func is Function;
+export declare const isPromise: (source: unknown) => source is Promise<any>;

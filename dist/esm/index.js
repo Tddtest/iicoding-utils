@@ -148,6 +148,7 @@ var getComplex = function (source) {
         _a['[object Array]'] = 'array',
         _a['[object Blob]'] = 'blob',
         _a['[object Promise]'] = 'promise',
+        _a['[object ArrayBuffer]'] = 'buffer',
         _a);
     return typeObject[Object.prototype.toString.call(source)];
 };
@@ -169,6 +170,7 @@ var isBoolean = function (bool) { return typeof bool === 'boolean'; };
 var isObject = function (obj) { return getComplex(obj) === 'object'; };
 var isBlob = function (blob) { return getComplex(blob) === 'blob'; };
 var isDate = function (date) { return getComplex(date) === 'date'; };
+var isArrayBuffer = function (buffer) { return getComplex(buffer) === 'buffer'; };
 var isHTMLElement = function (element) { return element instanceof HTMLElement; };
 var isPlainObject = function (obj) {
     if (!isObject(obj))
@@ -202,6 +204,67 @@ PERFORMANCE OF THIS SOFTWARE.
 ***************************************************************************** */
 /* global Reflect, Promise, SuppressedError, Symbol */
 
+
+var __assign = function() {
+    __assign = Object.assign || function __assign(t) {
+        for (var s, i = 1, n = arguments.length; i < n; i++) {
+            s = arguments[i];
+            for (var p in s) if (Object.prototype.hasOwnProperty.call(s, p)) t[p] = s[p];
+        }
+        return t;
+    };
+    return __assign.apply(this, arguments);
+};
+
+function __rest(s, e) {
+    var t = {};
+    for (var p in s) if (Object.prototype.hasOwnProperty.call(s, p) && e.indexOf(p) < 0)
+        t[p] = s[p];
+    if (s != null && typeof Object.getOwnPropertySymbols === "function")
+        for (var i = 0, p = Object.getOwnPropertySymbols(s); i < p.length; i++) {
+            if (e.indexOf(p[i]) < 0 && Object.prototype.propertyIsEnumerable.call(s, p[i]))
+                t[p[i]] = s[p[i]];
+        }
+    return t;
+}
+
+function __awaiter(thisArg, _arguments, P, generator) {
+    function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
+    return new (P || (P = Promise))(function (resolve, reject) {
+        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
+        function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
+        function step(result) { result.done ? resolve(result.value) : adopt(result.value).then(fulfilled, rejected); }
+        step((generator = generator.apply(thisArg, _arguments || [])).next());
+    });
+}
+
+function __generator(thisArg, body) {
+    var _ = { label: 0, sent: function() { if (t[0] & 1) throw t[1]; return t[1]; }, trys: [], ops: [] }, f, y, t, g;
+    return g = { next: verb(0), "throw": verb(1), "return": verb(2) }, typeof Symbol === "function" && (g[Symbol.iterator] = function() { return this; }), g;
+    function verb(n) { return function (v) { return step([n, v]); }; }
+    function step(op) {
+        if (f) throw new TypeError("Generator is already executing.");
+        while (g && (g = 0, op[0] && (_ = 0)), _) try {
+            if (f = 1, y && (t = op[0] & 2 ? y["return"] : op[0] ? y["throw"] || ((t = y["return"]) && t.call(y), 0) : y.next) && !(t = t.call(y, op[1])).done) return t;
+            if (y = 0, t) op = [op[0] & 2, t.value];
+            switch (op[0]) {
+                case 0: case 1: t = op; break;
+                case 4: _.label++; return { value: op[1], done: false };
+                case 5: _.label++; y = op[1]; op = [0]; continue;
+                case 7: op = _.ops.pop(); _.trys.pop(); continue;
+                default:
+                    if (!(t = _.trys, t = t.length > 0 && t[t.length - 1]) && (op[0] === 6 || op[0] === 2)) { _ = 0; continue; }
+                    if (op[0] === 3 && (!t || (op[1] > t[0] && op[1] < t[3]))) { _.label = op[1]; break; }
+                    if (op[0] === 6 && _.label < t[1]) { _.label = t[1]; t = op; break; }
+                    if (t && _.label < t[2]) { _.label = t[2]; _.ops.push(op); break; }
+                    if (t[2]) _.ops.pop();
+                    _.trys.pop(); continue;
+            }
+            op = body.call(thisArg, _);
+        } catch (e) { op = [6, e]; y = 0; } finally { f = t = 0; }
+        if (op[0] & 5) throw op[1]; return { value: op[0] ? op[1] : void 0, done: true };
+    }
+}
 
 function __spreadArray(to, from, pack) {
     if (pack || arguments.length === 2) for (var i = 0, l = from.length, ar; i < l; i++) {
@@ -372,7 +435,7 @@ function copy(text, options) {
     return success;
 }
 
-var freeGlobal = typeof global === 'object' && global !== null && global.Object === Object && global;
+var freeGlobal = typeof global !== undefined && typeof global !== null && typeof global === 'object' && global.Object === Object && global;
 
 var freeGlobalThis = typeof globalThis === 'object' && globalThis !== null && globalThis.Object === Object && globalThis;
 var freeSelf = typeof self === 'object' && self !== null && self.Object === Object && self;
@@ -505,111 +568,6 @@ var toFormData = function (target) {
     });
     return fd;
 };
-var getRandomColor = function (color) {
-    if ((color === null || color === void 0 ? void 0 : color.length) >= 6) {
-        if (color.startsWith('#'))
-            return color;
-        return "#".concat(color);
-    }
-    var hex = Math.floor(Math.random() * 16777216).toString(16);
-    while (hex.length < 6) {
-        hex = '0' + hex;
-    }
-    return '#' + hex;
-};
-var color2hexadecimal = function (hex, onlyValue) {
-    if (onlyValue === void 0) { onlyValue = false; }
-    var rgb = [];
-    if (/^\#[0-9A-F]{3}$/i.test(hex)) {
-        var sixHex_1 = '#';
-        hex.replace(/[0-9A-F]/ig, function (kw) {
-            sixHex_1 += kw + kw;
-            return kw;
-        });
-        hex = sixHex_1;
-    }
-    if (/^#[0-9A-F]{6}$/i.test(hex)) {
-        hex.replace(/[0-9A-F]{2}/ig, function (kw) {
-            rgb.push(eval("0x".concat(kw)));
-            return kw;
-        });
-    }
-    else if (/^#[0-9A-F]{8}$/i.test(hex)) {
-        var opacity = hex.slice(7);
-        hex = hex.slice(0, 7);
-        hex.replace(/[0-9A-F]{2}/ig, function (kw) {
-            rgb.push(eval("0x".concat(kw)));
-            return kw;
-        });
-        if (!isNaN(+opacity)) {
-            rgb.push(".".concat(opacity));
-        }
-    }
-    else {
-        rgb.push(0, 0, 0);
-    }
-    return onlyValue ? rgb : "rgb(".concat(rgb.join(','), ")");
-};
-var hexadecimal2color = function (hexStr) {
-    var reg = /^#([0-9a-fA-f]{3}|[0-9a-fA-f]{6}|[0-9a-fA-f]{8}|[0-9a-fA-f]{6}[0-9]{2})$/;
-    if (reg.test(hexStr.toString())) {
-        return hexStr;
-    }
-    else {
-        var temp = [];
-        var strHex = "#";
-        var commonCondition_1 = function (str) {
-            var x = str.toString().trim();
-            if (x.startsWith('.')) {
-                x = x.slice(1);
-            }
-            return (isString(x) || isNumber(x)) && !isNaN(+x);
-        };
-        var dataProcessing = function (source) {
-            return source.filter(function (x) { return commonCondition_1(x); }).map(function (item) {
-                var x = item.trim();
-                if (x.startsWith('0') || x.startsWith('.')) {
-                    return "0.".concat(x.split('.').at(-1));
-                }
-                if (+x > 255) {
-                    return '255';
-                }
-                return parseInt(x, 10) + '';
-            });
-        };
-        if (isString(hexStr)) {
-            temp = dataProcessing(hexStr.replace(/(?:\(|\)|rgba|rgb|RGBA|RGB)*/g, "").split(','));
-        }
-        if (Array.isArray(hexStr)) {
-            if (hexStr.length === 1 && isString(hexStr[0])) {
-                return hexadecimal2color(hexStr[0]);
-            }
-            temp = dataProcessing(hexStr);
-        }
-        if (temp.length > 2) {
-            temp = temp.slice(0, 3);
-            for (var i = 0; i < temp.length; i++) {
-                if (i !== 3) {
-                    if (temp[i] === "0") {
-                        strHex += "00";
-                    }
-                    else {
-                        var newItem = Number(temp[i]).toString(16);
-                        if (newItem.length < 2) {
-                            newItem = "0" + newItem;
-                        }
-                        strHex += newItem;
-                    }
-                }
-                else {
-                    strHex += temp[i] === "0" ? "" : Number(temp[i]) * 100;
-                }
-            }
-            strHex = strHex.toUpperCase();
-        }
-        return strHex;
-    }
-};
 
 var spacePatten = /^[\u4e00-\u9fa5a-zA-Z0-9`~!@#$%^&*()_+-=?:{},.\\/;<>[\]·！￥……（——）：；"'“”‘’、，|《。》？【】]*$/;
 var isSingleNumOrLetter = new RegExp('(?=.*[0-9])(?=.*[a-zA-Z])');
@@ -689,6 +647,31 @@ var setCookie = function (key, value, expires) {
 var deleteCookie = function (key) {
     setCookie(key, '', -1);
 };
+function getBrowserType() {
+    var userAgent = window.navigator.userAgent;
+    var isOpera = userAgent.indexOf('Opera') > -1;
+    if (isOpera) {
+        return 'Opera';
+    }
+    if (userAgent.indexOf('compatible') > -1 && userAgent.indexOf('MSIE') > -1 && !isOpera) {
+        return 'IE';
+    }
+    if (userAgent.indexOf('Safari') > -1 && userAgent.indexOf('Chrome') === -1) {
+        return 'Safari';
+    }
+    if (userAgent.indexOf('Firefox') > -1) {
+        return 'Firefox';
+    }
+    if (userAgent.indexOf('Chrome') > -1) {
+        return 'Chrome';
+    }
+    return '';
+}
+var isSafari = function () { return getBrowserType() === 'Safari'; };
+var isChrome = function () { return getBrowserType() === 'Chrome'; };
+var isFirefox = function () { return getBrowserType() === 'Firefox'; };
+var isOpera = function () { return getBrowserType() === 'Opera'; };
+var isIE = function () { return getBrowserType() === 'IE'; };
 
 var log = function (style) {
     var args = [];
@@ -800,4 +783,300 @@ var consoleExtend = function () {
     });
 };
 
-export { IdCardGender, capitalize, color2hexadecimal, composeAsync, consoleExtend, copy, credentialDesensitization, debounce, deleteCookie, emailPattern, extendMethodByChain, extendStorageMethod, getComplex, getCookie, getRandomColor, getType, hexadecimal2color, isBigInteger, isBlob, isBoolean, isDate, isFunction, isHTMLElement, isIllegalEmail, isIllegalPhone, isIllegalUrl, isImage, isInInterval, isLegalEmail, isLegalPhone, isLegalUrl, isNumber, isObject, isPlainObject, isPromise, isSingleNumOrLetter, isString, isSymbol, phoneDesensitization, phonePattern, setCookie, sleep, spacePatten, toFormData, urlPattern, urlPatternExtend };
+var getRandomColor = function (color) {
+    if ((color === null || color === void 0 ? void 0 : color.length) >= 6) {
+        if (color.startsWith('#'))
+            return color;
+        return "#".concat(color);
+    }
+    var hex = Math.floor(Math.random() * 16777216).toString(16);
+    while (hex.length < 6) {
+        hex = '0' + hex;
+    }
+    return '#' + hex;
+};
+function color2rgb(hex, opacity, onlyValue) {
+    var rgb = [];
+    if (/^\#[0-9A-F]{3}$/i.test(hex)) {
+        var sixHex_1 = '#';
+        hex.replace(/[0-9A-F]/gi, function (kw) {
+            sixHex_1 += kw + kw;
+            return kw;
+        });
+        hex = sixHex_1;
+    }
+    if (/^#[0-9A-F]{6}$/i.test(hex)) {
+        hex.replace(/[0-9A-F]{2}/gi, function (kw) {
+            rgb.push(eval("0x".concat(kw)));
+            return kw;
+        });
+    }
+    else {
+        rgb.push(0, 0, 0);
+    }
+    if (opacity) {
+        rgb.push(opacity);
+    }
+    return onlyValue ? rgb : "".concat(opacity ? 'rgba' : 'rgb', "(").concat(rgb.join(','), ")");
+}
+var hexadecimal2color = function (hexStr) {
+    var reg = /^#([0-9a-fA-f]{3}|[0-9a-fA-f]{6}|[0-9a-fA-f]{8}|[0-9a-fA-f]{6}[0-9]{2})$/;
+    if (reg.test(hexStr.toString())) {
+        return hexStr;
+    }
+    else {
+        var temp = [];
+        var strHex = "#";
+        var commonCondition_1 = function (str) {
+            var x = str.toString().trim();
+            if (x.startsWith('.')) {
+                x = x.slice(1);
+            }
+            return (isString(x) || isNumber(x)) && !isNaN(+x);
+        };
+        var dataProcessing = function (source) {
+            return source.filter(function (x) { return commonCondition_1(x); }).map(function (item) {
+                var x = item.trim();
+                if (x.startsWith('0') || x.startsWith('.')) {
+                    return "0.".concat(x.split('.').at(-1));
+                }
+                if (+x > 255) {
+                    return '255';
+                }
+                return parseInt(x, 10) + '';
+            });
+        };
+        if (isString(hexStr)) {
+            temp = dataProcessing(hexStr.replace(/(?:\(|\)|rgba|rgb|RGBA|RGB)*/g, "").split(','));
+        }
+        if (Array.isArray(hexStr)) {
+            if (hexStr.length === 1 && isString(hexStr[0])) {
+                return hexadecimal2color(hexStr[0]);
+            }
+            temp = dataProcessing(hexStr);
+        }
+        if (temp.length > 2) {
+            temp = temp.slice(0, 3);
+            for (var i = 0; i < temp.length; i++) {
+                if (i !== 3) {
+                    if (temp[i] === "0") {
+                        strHex += "00";
+                    }
+                    else {
+                        var newItem = Number(temp[i]).toString(16);
+                        if (newItem.length < 2) {
+                            newItem = "0" + newItem;
+                        }
+                        strHex += newItem;
+                    }
+                }
+                else {
+                    strHex += temp[i] === "0" ? "" : Number(temp[i]) * 100;
+                }
+            }
+            strHex = strHex.toUpperCase();
+        }
+        return strHex;
+    }
+};
+var rgb2hsl = function (rgb) {
+    var r = rgb[0], g = rgb[1], b = rgb[2];
+    r /= 255;
+    g /= 255;
+    b /= 255;
+    var max = Math.max(r, g, b);
+    var min = Math.min(r, g, b);
+    var d = max - min;
+    var l = (max + min) / 2;
+    var s = d === 0 ? 0 : l > 0.5 ? d / (2 - 2 * l) : d / (2 * l);
+    var h = 0;
+    if (d !== 0) {
+        switch (max) {
+            case r:
+                h = (g - b) / d + (g < b ? 6 : 0);
+                break;
+            case g:
+                h = (b - r) / d + 2;
+                break;
+            case b:
+                h = (r - g) / d + 4;
+                break;
+        }
+        h /= 6;
+    }
+    var H = Math.ceil(h * 360);
+    var S = Math.ceil(s * 100);
+    var L = Math.ceil(l * 100);
+    return {
+        str: " ".concat(H, " ").concat(S, "% ").concat(L, "%"),
+        hsl: {
+            h: H,
+            s: S,
+            l: L,
+        },
+    };
+};
+var changeRgba = function (rgbaColor, newOpacity) {
+    var matches = rgbaColor.match(/(\d+)/g);
+    if (matches) {
+        var colorArray = matches.map(Number);
+        if (colorArray) {
+            colorArray[3] = newOpacity;
+            return 'rgba(' + colorArray.join(', ') + ')';
+        }
+    }
+    return rgbaColor;
+};
+
+var getBase64File = function (file) {
+    return new Promise(function (resolve, reject) {
+        var reader = new FileReader();
+        reader.readAsDataURL(file);
+        reader.onload = function (ev) {
+            var _a;
+            resolve((_a = ev.target) === null || _a === void 0 ? void 0 : _a.result);
+        };
+        reader.onerror = function (err) {
+            reject(err);
+        };
+    });
+};
+var getImgFile = function (file) {
+    return new Promise(function (resolve, reject) {
+        var img = new Image();
+        img.src = file;
+        img.onload = function () { return resolve(img); };
+        img.onerror = function (err) { return reject(err); };
+    });
+};
+var generateCanvas2D = function (width, height) {
+    var canvas = document.createElement('canvas');
+    var ctx = canvas.getContext('2d');
+    canvas.width = width;
+    canvas.height = height;
+    ctx.clearRect(0, 0, width, height);
+    canvas.ctx = ctx;
+    return canvas;
+};
+var downloadAtLinkByHref = function (href, filename) {
+    var aDom = document.createElement('a');
+    aDom.href = href;
+    aDom.download = filename;
+    document.body.appendChild(aDom);
+    aDom.click();
+    document.body.removeChild(aDom);
+    window.URL.revokeObjectURL(href);
+};
+var downloadFile = function (filename, file, fileType) {
+    if (fileType === void 0) { fileType = 'image/png'; }
+    if (!window || !Blob) {
+        throw '此方法不支持当前运行环境';
+    }
+    try {
+        var blob = isBlob(file) ? file : new File([file], filename, { type: fileType });
+        var href = window.URL.createObjectURL(blob);
+        downloadAtLinkByHref(href, filename);
+    }
+    catch (error) {
+        console.log(error, '下载出错');
+    }
+};
+var getSize = function (size) {
+    if (size.changeWidth) {
+        size.width = size.changeWidth;
+    }
+    if (size.changeHeight) {
+        size.height = size.changeHeight;
+    }
+    if (size.scale && size.scale < 1 && size.scale > 0) {
+        size.width *= size.scale;
+        size.height *= size.scale;
+    }
+    var originWidth = size.width;
+    var originHeight = size.height;
+    var maxWidth = 1400;
+    var maxHeight = 1400;
+    if (originWidth > maxWidth || originHeight > maxHeight) {
+        if (originWidth / originHeight > maxWidth / maxHeight) {
+            size.width = maxWidth;
+            size.height = Math.round(maxWidth * (originHeight / originWidth));
+        }
+        else {
+            size.width = Math.round(maxHeight * (originWidth / originHeight));
+            size.height = maxHeight;
+        }
+    }
+    return { width: size.width, height: size.height };
+};
+var getImgCanvasCtx = function (base64File, options) { return __awaiter(void 0, void 0, void 0, function () {
+    var img, _a, width, height, canvas;
+    return __generator(this, function (_b) {
+        switch (_b.label) {
+            case 0: return [4, getImgFile(base64File)];
+            case 1:
+                img = _b.sent();
+                _a = getSize(__assign({ width: img.width, height: img.height, scale: 1 }, options)), width = _a.width, height = _a.height;
+                canvas = generateCanvas2D(width, height);
+                canvas.ctx.drawImage(img, 0, 0, img.width, img.height);
+                return [2, canvas];
+        }
+    });
+}); };
+var canvas2file = function (canvasCtx, type, quality) {
+    if (type === void 0) { type = 'image/jpeg'; }
+    if (quality === void 0) { quality = 0.5; }
+    return new Promise(function (resolve) {
+        canvasCtx.toBlob(function (blob) { return resolve(blob); }, type, quality);
+    });
+};
+var compressionFile = function (file, type, options) {
+    if (type === void 0) { type = 'image/jpeg'; }
+    if (options === void 0) { options = { quality: 0.5 }; }
+    return __awaiter(void 0, void 0, void 0, function () {
+        var quality, changeWidth, changeHeight, _a, compressionSize, other, base64File, canvasCtx, blob;
+        return __generator(this, function (_b) {
+            switch (_b.label) {
+                case 0:
+                    quality = options.quality, changeWidth = options.width, changeHeight = options.height, _a = options.compressionSize, compressionSize = _a === void 0 ? 300 : _a, other = __rest(options, ["quality", "width", "height", "compressionSize"]);
+                    if (Math.round(file.size / 1024) <= compressionSize) {
+                        return [2, file];
+                    }
+                    return [4, getBase64File(file)];
+                case 1:
+                    base64File = _b.sent();
+                    return [4, getImgCanvasCtx(base64File, __assign({ changeWidth: changeWidth, changeHeight: changeHeight }, other))];
+                case 2:
+                    canvasCtx = _b.sent();
+                    return [4, canvas2file(canvasCtx, type, quality)];
+                case 3:
+                    blob = _b.sent();
+                    if (blob == undefined) {
+                        return [2, null];
+                    }
+                    return [2, new File([blob], file.name, { type: type })];
+            }
+        });
+    });
+};
+var blob2file = function (blob, filename) {
+    if (!isBlob(blob) || !isString(blob) || !isArrayBuffer(blob))
+        return null;
+    return new File([blob], filename, {
+        type: 'application/json',
+        lastModified: Date.now()
+    });
+};
+var base642file = function (base, filename) {
+    var arr = base.split(',');
+    var mime = arr[0].match(/:(.*?);/)[1];
+    var suffix = mime.split('/')[1];
+    var bstr = atob(arr[1]);
+    var n = bstr.length;
+    var u8arr = new Uint8Array(n);
+    while (n--) {
+        u8arr[n] = bstr.charCodeAt(n);
+    }
+    return new File([u8arr], "".concat(filename, ".").concat(suffix), { type: mime });
+};
+
+export { IdCardGender, base642file, blob2file, canvas2file, capitalize, changeRgba, color2rgb, composeAsync, compressionFile, consoleExtend, copy, credentialDesensitization, debounce, deleteCookie, downloadAtLinkByHref, downloadFile, emailPattern, extendMethodByChain, extendStorageMethod, generateCanvas2D, getBase64File, getBrowserType, getComplex, getCookie, getImgCanvasCtx, getImgFile, getRandomColor, getType, hexadecimal2color, isArrayBuffer, isBigInteger, isBlob, isBoolean, isChrome, isDate, isFirefox, isFunction, isHTMLElement, isIE, isIllegalEmail, isIllegalPhone, isIllegalUrl, isImage, isInInterval, isLegalEmail, isLegalPhone, isLegalUrl, isNumber, isObject, isOpera, isPlainObject, isPromise, isSafari, isSingleNumOrLetter, isString, isSymbol, phoneDesensitization, phonePattern, rgb2hsl, setCookie, sleep, spacePatten, toFormData, urlPattern, urlPatternExtend };

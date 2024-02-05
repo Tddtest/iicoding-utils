@@ -11,3 +11,5 @@ export * from './regular-expression';
 export * from './validate';
 export * from './browser';
 export * from './console';
+export * from './color';
+export * from './file';
