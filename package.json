@@ -1,6 +1,6 @@
 {
   "name": "@iicoding/utils",
-  "version": "0.0.30",
+  "version": "0.0.31",
   "main": "dist/cjs/index.js",
   "types": "dist/esm/index.d.ts",
   "module": "dist/esm/index.js",
@@ -28,5 +28,8 @@
   "publishConfig": {
     "access": "public",
     "registry": "https://registry.npmjs.org/"
+  },
+  "dependencies": {
+    "decimal.js": "^10.4.3"
   }
 }

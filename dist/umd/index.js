@@ -4,9 +4,15 @@
     (global = typeof globalThis !== 'undefined' ? globalThis : global || self, factory(global.icdUtils = {}));
 })(this, (function (exports) { 'use strict';
 
+    var freeGlobal = typeof global !== undefined && typeof global !== null && typeof global === 'object' && global.Object === Object && global;
+
+    var freeGlobalThis = typeof globalThis === 'object' && globalThis !== null && globalThis.Object === Object && globalThis;
+    var freeSelf = typeof self === 'object' && self !== null && self.Object === Object && self;
+    var root = freeGlobalThis || freeGlobal || freeSelf || Function('return this')();
+
     var LocalstorageDispatchEvent = (function () {
         function LocalstorageDispatchEvent() {
-            if (!global || !global.localStorage || !global.sessionStorage) {
+            if (!root || !root.localStorage || !root.sessionStorage) {
                 console.error('当前环境不支持本地存储方案');
             }
         }
@@ -440,12 +446,6 @@
         }
         return success;
     }
-
-    var freeGlobal = typeof global !== undefined && typeof global !== null && typeof global === 'object' && global.Object === Object && global;
-
-    var freeGlobalThis = typeof globalThis === 'object' && globalThis !== null && globalThis.Object === Object && globalThis;
-    var freeSelf = typeof self === 'object' && self !== null && self.Object === Object && self;
-    var root = freeGlobalThis || freeGlobal || freeSelf || Function('return this')();
 
     function debounce(func, wait, options) {
         var lastArgs;
