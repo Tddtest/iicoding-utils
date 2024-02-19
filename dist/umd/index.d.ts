@@ -13,3 +13,5 @@ export * from './browser';
 export * from './console';
 export * from './color';
 export * from './file';
+export * from './calc';
+export * from './dom';

@@ -1,1 +1,1 @@
-export declare const add: (...args: (number | string)[]) => void;
+export declare const add: (...args: (number | string)[]) => number;
