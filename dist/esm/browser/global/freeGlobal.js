@@ -1,0 +1,4 @@
+function _typeof(o) { "@babel/helpers - typeof"; return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (o) { return typeof o; } : function (o) { return o && "function" == typeof Symbol && o.constructor === Symbol && o !== Symbol.prototype ? "symbol" : typeof o; }, _typeof(o); }
+// node 全局对象是否存在
+export var freeGlobal = (typeof global === "undefined" ? "undefined" : _typeof(global)) !== undefined && (typeof global === "undefined" ? "undefined" : _typeof(global)) !== null && (typeof global === "undefined" ? "undefined" : _typeof(global)) === 'object' && global.Object === Object && global;
+export default freeGlobal;

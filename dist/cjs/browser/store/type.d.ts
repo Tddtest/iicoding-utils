@@ -1,0 +1,10 @@
+export type TR = Record<string, any>;
+export type TStorageType = 'localStorage' | 'sessionStorage';
+export type TStorageListenersType = 'set' | 'remove' | 'clear';
+export type ExtendStoreGet = (key: string) => string | null;
+export type ExtendStoreGet2Json = (key: string) => TR | null;
+export type ExtendStoreSet = (key: string, value: any, trigger?: boolean) => void;
+export type ExtendStoreSetMore = (storageObject: TR, trigger?: boolean) => void;
+export type ExtendStoreRemove = (key: string, trigger?: boolean) => void;
+export type ExtendStoreRemoveMore = (removeKeys: string[], trigger?: boolean) => void;
+export type ExtendStoreClearAll = (trigger?: boolean) => void;

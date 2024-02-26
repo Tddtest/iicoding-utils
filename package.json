@@ -1,6 +1,7 @@
 {
   "name": "@iicoding/utils",
-  "version": "0.0.33",
+  "version": "0.0.35",
+  "description": "",
   "main": "dist/cjs/index.js",
   "types": "dist/esm/index.d.ts",
   "module": "dist/esm/index.js",
@@ -8,6 +9,15 @@
     "import": "./dist/esm/index.js",
     "require": "./dist/cjs/index.js"
   },
+  "scripts": {
+    "build": "father build",
+    "rmn": "rimraf node_modules",
+    "release:utils": "pnpm run release",
+    "release": "ts-node script/release.ts",
+    "push:repo": "cd ../../pub/utils && yarn && yarn run push",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
   "license": "MIT",
   "repository": {
     "type": "git",
@@ -18,18 +28,24 @@
     "dom utils",
     "react utils",
     "vue utils",
-    "js utils"
+    "js utils",
+    "node utils"
   ],
   "bugs": {
     "url": "https://github.com/Tddtest/iicoding-utils/issues"
   },
   "homepage": "https://github.com/Tddtest/iicoding-utils#readme",
-  "umdModuleName": "autoAnimate",
   "publishConfig": {
     "access": "public",
     "registry": "https://registry.npmjs.org/"
   },
   "dependencies": {
-    "decimal.js": "^10.4.3"
+    "chalk": "4.1.2",
+    "decimal.js": "^10.4.3",
+    "fs-extra": "^11.2.0",
+    "ora": "5.4.1"
+  },
+  "devDependencies": {
+    "@types/fs-extra": "^11.0.4"
   }
 }
