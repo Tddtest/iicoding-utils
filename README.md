@@ -8,10 +8,4 @@ Browser 端
 - 扩展对象属性
 - 扩展 storage 对象功能
 
-Node 端
-- file actions
-- logger
-- path actions
-- launcher
-
 业务引入时，自动支持按需加载和构建
