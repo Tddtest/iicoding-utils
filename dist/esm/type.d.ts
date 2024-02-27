@@ -1,1 +1,1 @@
-export type TFn = (...args: any[]) => any;
+export type TFn<T = any> = (...args: any[]) => T;

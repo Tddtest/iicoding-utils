@@ -1,6 +1,6 @@
 {
   "name": "@iicoding/utils",
-  "version": "0.0.35",
+  "version": "0.0.36",
   "description": "",
   "main": "dist/cjs/index.js",
   "types": "dist/esm/index.d.ts",
@@ -8,14 +8,6 @@
   "exports": {
     "import": "./dist/esm/index.js",
     "require": "./dist/cjs/index.js"
-  },
-  "scripts": {
-    "build": "father build",
-    "rmn": "rimraf node_modules",
-    "release:utils": "pnpm run release",
-    "release": "ts-node script/release.ts",
-    "push:repo": "cd ../../pub/utils && yarn && yarn run push",
-    "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "",
   "license": "MIT",
@@ -45,7 +37,10 @@
     "fs-extra": "^11.2.0",
     "ora": "5.4.1"
   },
+  "scripts": {
+    "push": "node script.js"
+  },
   "devDependencies": {
-    "@types/fs-extra": "^11.0.4"
+    "@iicoding/release": "latest"
   }
 }

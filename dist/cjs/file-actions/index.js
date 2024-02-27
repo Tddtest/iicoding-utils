@@ -13,19 +13,17 @@ var __copyProps = (to, from, except, desc) => {
 var __reExport = (target, mod, secondTarget) => (__copyProps(target, mod, "default"), secondTarget && __copyProps(secondTarget, mod, "default"));
 var __toCommonJS = (mod) => __copyProps(__defProp({}, "__esModule", { value: true }), mod);
 
-// src/node/index.ts
-var node_exports = {};
-module.exports = __toCommonJS(node_exports);
-__reExport(node_exports, require("./path"), module.exports);
-__reExport(node_exports, require("./logger"), module.exports);
-__reExport(node_exports, require("./launcher"), module.exports);
-__reExport(node_exports, require("./chalk-log"), module.exports);
-__reExport(node_exports, require("./file-actions"), module.exports);
+// src/node/file-actions/index.ts
+var file_actions_exports = {};
+module.exports = __toCommonJS(file_actions_exports);
+__reExport(file_actions_exports, require("./judge"), module.exports);
+__reExport(file_actions_exports, require("./move"), module.exports);
+__reExport(file_actions_exports, require("./crud"), module.exports);
+__reExport(file_actions_exports, require("./copy"), module.exports);
 // Annotate the CommonJS export names for ESM import in node:
 0 && (module.exports = {
-  ...require("./path"),
-  ...require("./logger"),
-  ...require("./launcher"),
-  ...require("./chalk-log"),
-  ...require("./file-actions")
+  ...require("./judge"),
+  ...require("./move"),
+  ...require("./crud"),
+  ...require("./copy")
 });
