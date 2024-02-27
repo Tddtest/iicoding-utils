@@ -1,6 +1,8 @@
 import { type TFn } from "..";
 export interface IConsoleExtends {
     log: TFn;
+    color: (color: ColorValue, type?: ColorType) => Console;
+    textColor: (color: CSSStyleDeclaration['color'], once?: boolean) => Console;
     yellow: TFn;
     red: TFn;
     green: TFn;

@@ -227,6 +227,8 @@ export var consoleExtend = function consoleExtend() {
     cyan: icdInstance.cyan,
     gray: icdInstance.gray,
     green: icdInstance.green,
-    yellow: icdInstance.yellow
+    color: icdInstance.color,
+    yellow: icdInstance.yellow,
+    textColor: icdInstance.textColor
   });
 };
