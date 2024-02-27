@@ -9,7 +9,7 @@ import { extendMethodByChain, isObject, isString } from "..";
 var Console = /*#__PURE__*/_createClass(function Console() {
   var _this = this;
   _classCallCheck(this, Console);
-  _defineProperty(this, "console", (typeof window === "undefined" ? "undefined" : _typeof(window)) ? {
+  _defineProperty(this, "console", typeof window === 'undefined' ? {
     log: function log() {}
   } : window.console);
   _defineProperty(this, "colorValue", void 0);
