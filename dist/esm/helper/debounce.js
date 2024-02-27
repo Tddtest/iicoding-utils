@@ -1,4 +1,4 @@
-import { isObject } from '..';
+import { isObject } from "../index";
 import root from "../global";
 export function debounce(func, wait, options) {
   var lastArgs;

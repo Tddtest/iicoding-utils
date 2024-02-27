@@ -16,31 +16,20 @@ var __copyProps = (to, from, except, desc) => {
 };
 var __toCommonJS = (mod) => __copyProps(__defProp({}, "__esModule", { value: true }), mod);
 
-// src/browserasf/hof/compose.ts
-var compose_exports = {};
-__export(compose_exports, {
-  composeAsync: () => composeAsync
+// src/string/index.ts
+var string_exports = {};
+__export(string_exports, {
+  capitalize: () => capitalize
 });
-module.exports = __toCommonJS(compose_exports);
-var composeAsync = (middleware) => {
-  const middlewareLen = middleware.length;
-  if (middlewareLen === 0) {
-    return (arg) => arg;
+module.exports = __toCommonJS(string_exports);
+var capitalize = (str) => {
+  if (str == null || typeof str !== "string") {
+    return "";
   }
-  if (middlewareLen === 1) {
-    return middleware[0];
-  }
-  const dispatch = (idx, ...params) => {
-    if (idx === middlewareLen)
-      return;
-    const crtMiddleware = middleware[idx];
-    crtMiddleware((...nextPrams) => {
-      dispatch(++idx, ...nextPrams);
-    }, ...params);
-  };
-  return (params) => dispatch(0, params);
+  const str2LowerCase = str.toLowerCase();
+  return `${str2LowerCase.substring(0, 1).toUpperCase()}${str2LowerCase.substring(1)}`;
 };
 // Annotate the CommonJS export names for ESM import in node:
 0 && (module.exports = {
-  composeAsync
+  capitalize
 });

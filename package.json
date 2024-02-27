@@ -1,6 +1,6 @@
 {
   "name": "@iicoding/utils",
-  "version": "0.0.38",
+  "version": "0.0.39",
   "description": "",
   "main": "dist/cjs/index.js",
   "types": "dist/esm/index.d.ts",
@@ -32,10 +32,7 @@
     "registry": "https://registry.npmjs.org/"
   },
   "dependencies": {
-    "chalk": "4.1.2",
-    "decimal.js": "^10.4.3",
-    "fs-extra": "^11.2.0",
-    "ora": "5.4.1"
+    "decimal.js": "^10.4.3"
   },
   "scripts": {
     "push": "node script.js"

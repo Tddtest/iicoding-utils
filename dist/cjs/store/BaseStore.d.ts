@@ -1,4 +1,4 @@
-import { ExtendStoreGet, ExtendStoreSet, ExtendStoreSetMore, ExtendStoreGet2Json, ExtendStoreRemove, ExtendStoreClearAll, ExtendStoreRemoveMore } from "@iicoding/utils";
+import { ExtendStoreGet, ExtendStoreSet, ExtendStoreSetMore, ExtendStoreGet2Json, ExtendStoreRemove, ExtendStoreClearAll, ExtendStoreRemoveMore } from "..";
 declare abstract class BaseStore {
     set: ExtendStoreSet;
     get: ExtendStoreGet;

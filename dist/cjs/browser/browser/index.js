@@ -16,7 +16,7 @@ var __copyProps = (to, from, except, desc) => {
 };
 var __toCommonJS = (mod) => __copyProps(__defProp({}, "__esModule", { value: true }), mod);
 
-// src/browser/browser/index.ts
+// src/browserasf/browserasf/index.ts
 var browser_exports = {};
 __export(browser_exports, {
   deleteCookie: () => deleteCookie,

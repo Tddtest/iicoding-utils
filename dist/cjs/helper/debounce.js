@@ -26,14 +26,14 @@ var __toESM = (mod, isNodeMode, target) => (target = mod != null ? __create(__ge
 ));
 var __toCommonJS = (mod) => __copyProps(__defProp({}, "__esModule", { value: true }), mod);
 
-// src/browserasf/helper/debounce.ts
+// src/helper/debounce.ts
 var debounce_exports = {};
 __export(debounce_exports, {
   debounce: () => debounce,
   default: () => debounce_default
 });
 module.exports = __toCommonJS(debounce_exports);
-var import__ = require("..");
+var import__ = require("../index");
 var import_global = __toESM(require("../global"));
 function debounce(func, wait, options) {
   let lastArgs;

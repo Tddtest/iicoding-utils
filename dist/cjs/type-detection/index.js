@@ -16,7 +16,7 @@ var __copyProps = (to, from, except, desc) => {
 };
 var __toCommonJS = (mod) => __copyProps(__defProp({}, "__esModule", { value: true }), mod);
 
-// src/browserasf/type-detection/index.ts
+// src/type-detection/index.ts
 var type_detection_exports = {};
 __export(type_detection_exports, {
   getComplex: () => getComplex,

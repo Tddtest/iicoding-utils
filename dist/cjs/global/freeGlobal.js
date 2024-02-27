@@ -16,31 +16,16 @@ var __copyProps = (to, from, except, desc) => {
 };
 var __toCommonJS = (mod) => __copyProps(__defProp({}, "__esModule", { value: true }), mod);
 
-// src/browserasf/hof/compose.ts
-var compose_exports = {};
-__export(compose_exports, {
-  composeAsync: () => composeAsync
+// src/global/freeGlobal.ts
+var freeGlobal_exports = {};
+__export(freeGlobal_exports, {
+  default: () => freeGlobal_default,
+  freeGlobal: () => freeGlobal
 });
-module.exports = __toCommonJS(compose_exports);
-var composeAsync = (middleware) => {
-  const middlewareLen = middleware.length;
-  if (middlewareLen === 0) {
-    return (arg) => arg;
-  }
-  if (middlewareLen === 1) {
-    return middleware[0];
-  }
-  const dispatch = (idx, ...params) => {
-    if (idx === middlewareLen)
-      return;
-    const crtMiddleware = middleware[idx];
-    crtMiddleware((...nextPrams) => {
-      dispatch(++idx, ...nextPrams);
-    }, ...params);
-  };
-  return (params) => dispatch(0, params);
-};
+module.exports = __toCommonJS(freeGlobal_exports);
+var freeGlobal = typeof global !== void 0 && typeof global !== null && typeof global === "object" && global.Object === Object && global;
+var freeGlobal_default = freeGlobal;
 // Annotate the CommonJS export names for ESM import in node:
 0 && (module.exports = {
-  composeAsync
+  freeGlobal
 });

@@ -16,31 +16,27 @@ var __copyProps = (to, from, except, desc) => {
 };
 var __toCommonJS = (mod) => __copyProps(__defProp({}, "__esModule", { value: true }), mod);
 
-// src/browserasf/hof/compose.ts
-var compose_exports = {};
-__export(compose_exports, {
-  composeAsync: () => composeAsync
+// src/dom/index.ts
+var dom_exports = {};
+__export(dom_exports, {
+  setCssVarProperties: () => setCssVarProperties
 });
-module.exports = __toCommonJS(compose_exports);
-var composeAsync = (middleware) => {
-  const middlewareLen = middleware.length;
-  if (middlewareLen === 0) {
-    return (arg) => arg;
+module.exports = __toCommonJS(dom_exports);
+function setCssVarProperties(...args) {
+  let [dom, values] = args;
+  if (typeof document === "undefined" || typeof window === "undefined") {
+    return;
   }
-  if (middlewareLen === 1) {
-    return middleware[0];
+  if (!values) {
+    values = dom;
+    dom = document.documentElement;
   }
-  const dispatch = (idx, ...params) => {
-    if (idx === middlewareLen)
-      return;
-    const crtMiddleware = middleware[idx];
-    crtMiddleware((...nextPrams) => {
-      dispatch(++idx, ...nextPrams);
-    }, ...params);
-  };
-  return (params) => dispatch(0, params);
-};
+  Object.keys(values || {}).forEach((key) => {
+    console.log(key, values[key]);
+    dom.style.setProperty(key, values[key]);
+  });
+}
 // Annotate the CommonJS export names for ESM import in node:
 0 && (module.exports = {
-  composeAsync
+  setCssVarProperties
 });

@@ -26,7 +26,7 @@ var __toESM = (mod, isNodeMode, target) => (target = mod != null ? __create(__ge
 ));
 var __toCommonJS = (mod) => __copyProps(__defProp({}, "__esModule", { value: true }), mod);
 
-// src/browserasf/store/localstorage-dispatch-event.ts
+// src/store/localstorage-dispatch-event.ts
 var localstorage_dispatch_event_exports = {};
 __export(localstorage_dispatch_event_exports, {
   default: () => localstorage_dispatch_event_default,

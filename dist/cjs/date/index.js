@@ -16,7 +16,7 @@ var __copyProps = (to, from, except, desc) => {
 };
 var __toCommonJS = (mod) => __copyProps(__defProp({}, "__esModule", { value: true }), mod);
 
-// src/browserasf/date/index.ts
+// src/date/index.ts
 var date_exports = {};
 __export(date_exports, {
   getRemainder: () => getRemainder

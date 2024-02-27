@@ -1,7 +1,7 @@
 // 基于 decimal.js 封装。
 // 若后续有时间，可以学习一下 decimal.js 库的实现
 import Decimal from "decimal.js";
-import { isNumber } from "..";
+import { isNumber } from "../index";
 
 // 相加
 export var add = function add() {

@@ -17,7 +17,7 @@ var __copyProps = (to, from, except, desc) => {
 var __reExport = (target, mod, secondTarget) => (__copyProps(target, mod, "default"), secondTarget && __copyProps(secondTarget, mod, "default"));
 var __toCommonJS = (mod) => __copyProps(__defProp({}, "__esModule", { value: true }), mod);
 
-// src/browserasf/helper/index.ts
+// src/helper/index.ts
 var helper_exports = {};
 __export(helper_exports, {
   IdCardGender: () => IdCardGender,
@@ -27,7 +27,7 @@ __export(helper_exports, {
   toFormData: () => toFormData
 });
 module.exports = __toCommonJS(helper_exports);
-var import__ = require("..");
+var import__ = require("../index");
 __reExport(helper_exports, require("./copy"), module.exports);
 __reExport(helper_exports, require("./debounce"), module.exports);
 var sleep = (time) => {

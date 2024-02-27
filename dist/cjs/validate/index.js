@@ -16,7 +16,7 @@ var __copyProps = (to, from, except, desc) => {
 };
 var __toCommonJS = (mod) => __copyProps(__defProp({}, "__esModule", { value: true }), mod);
 
-// src/browserasf/validate/index.ts
+// src/validate/index.ts
 var validate_exports = {};
 __export(validate_exports, {
   isIllegalEmail: () => isIllegalEmail,

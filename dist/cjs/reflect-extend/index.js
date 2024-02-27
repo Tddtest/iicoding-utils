@@ -16,7 +16,7 @@ var __copyProps = (to, from, except, desc) => {
 };
 var __toCommonJS = (mod) => __copyProps(__defProp({}, "__esModule", { value: true }), mod);
 
-// src/browserasf/reflect-extend/index.ts
+// src/reflect-extend/index.ts
 var reflect_extend_exports = {};
 __export(reflect_extend_exports, {
   extendMethodByChain: () => extendMethodByChain

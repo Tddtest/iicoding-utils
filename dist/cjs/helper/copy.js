@@ -16,7 +16,7 @@ var __copyProps = (to, from, except, desc) => {
 };
 var __toCommonJS = (mod) => __copyProps(__defProp({}, "__esModule", { value: true }), mod);
 
-// src/browserasf/helper/copy.ts
+// src/helper/copy.ts
 var copy_exports = {};
 __export(copy_exports, {
   copy: () => copy,

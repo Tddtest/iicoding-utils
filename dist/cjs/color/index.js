@@ -16,7 +16,7 @@ var __copyProps = (to, from, except, desc) => {
 };
 var __toCommonJS = (mod) => __copyProps(__defProp({}, "__esModule", { value: true }), mod);
 
-// src/browserasf/color/index.ts
+// src/color/index.ts
 var color_exports = {};
 __export(color_exports, {
   changeRgba: () => changeRgba,

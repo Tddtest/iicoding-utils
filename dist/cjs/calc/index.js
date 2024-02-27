@@ -26,14 +26,14 @@ var __toESM = (mod, isNodeMode, target) => (target = mod != null ? __create(__ge
 ));
 var __toCommonJS = (mod) => __copyProps(__defProp({}, "__esModule", { value: true }), mod);
 
-// src/browserasf/calc/index.ts
+// src/calc/index.ts
 var calc_exports = {};
 __export(calc_exports, {
   add: () => add
 });
 module.exports = __toCommonJS(calc_exports);
 var import_decimal = __toESM(require("decimal.js"));
-var import__ = require("..");
+var import__ = require("../index");
 var add = (...args) => {
   const effectiveArgs = args.map((arg) => +arg).filter((arg) => (0, import__.isNumber)(arg) && !isNaN(arg));
   return effectiveArgs.reduce((previousValue, currentValue) => {

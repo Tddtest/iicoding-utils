@@ -16,7 +16,7 @@ var __copyProps = (to, from, except, desc) => {
 };
 var __toCommonJS = (mod) => __copyProps(__defProp({}, "__esModule", { value: true }), mod);
 
-// src/browserasf/regular-expression/index.ts
+// src/regular-expression/index.ts
 var regular_expression_exports = {};
 __export(regular_expression_exports, {
   emailPattern: () => emailPattern,

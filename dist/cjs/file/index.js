@@ -16,7 +16,7 @@ var __copyProps = (to, from, except, desc) => {
 };
 var __toCommonJS = (mod) => __copyProps(__defProp({}, "__esModule", { value: true }), mod);
 
-// src/browserasf/file/index.ts
+// src/file/index.ts
 var file_exports = {};
 __export(file_exports, {
   base642file: () => base642file,
@@ -31,7 +31,7 @@ __export(file_exports, {
   getImgFile: () => getImgFile
 });
 module.exports = __toCommonJS(file_exports);
-var import__ = require("..");
+var import__ = require("../index");
 var getBase64File = (file) => {
   return new Promise((resolve, reject) => {
     const reader = new FileReader();

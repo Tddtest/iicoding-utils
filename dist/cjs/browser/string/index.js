@@ -16,7 +16,7 @@ var __copyProps = (to, from, except, desc) => {
 };
 var __toCommonJS = (mod) => __copyProps(__defProp({}, "__esModule", { value: true }), mod);
 
-// src/browser/string/index.ts
+// src/browserasf/string/index.ts
 var string_exports = {};
 __export(string_exports, {
   capitalize: () => capitalize

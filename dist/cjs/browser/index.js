@@ -1,8 +1,6 @@
-var __create = Object.create;
 var __defProp = Object.defineProperty;
 var __getOwnPropDesc = Object.getOwnPropertyDescriptor;
 var __getOwnPropNames = Object.getOwnPropertyNames;
-var __getProtoOf = Object.getPrototypeOf;
 var __hasOwnProp = Object.prototype.hasOwnProperty;
 var __export = (target, all) => {
   for (var name in all)
@@ -16,57 +14,95 @@ var __copyProps = (to, from, except, desc) => {
   }
   return to;
 };
-var __reExport = (target, mod, secondTarget) => (__copyProps(target, mod, "default"), secondTarget && __copyProps(secondTarget, mod, "default"));
-var __toESM = (mod, isNodeMode, target) => (target = mod != null ? __create(__getProtoOf(mod)) : {}, __copyProps(
-  // If the importer is in node compatibility mode or this is not an ESM
-  // file that has been converted to a CommonJS file using a Babel-
-  // compatible transform (i.e. "__esModule" has not been set), then set
-  // "default" to the CommonJS "module.exports" for node compatibility.
-  isNodeMode || !mod || !mod.__esModule ? __defProp(target, "default", { value: mod, enumerable: true }) : target,
-  mod
-));
 var __toCommonJS = (mod) => __copyProps(__defProp({}, "__esModule", { value: true }), mod);
 
 // src/browser/index.ts
 var browser_exports = {};
 __export(browser_exports, {
-  extendStorageMethod: () => import_localstorage_dispatch_event.default
+  deleteCookie: () => deleteCookie,
+  getBrowserType: () => getBrowserType,
+  getCookie: () => getCookie,
+  isChrome: () => isChrome,
+  isFirefox: () => isFirefox,
+  isIE: () => isIE,
+  isOpera: () => isOpera,
+  isSafari: () => isSafari,
+  setCookie: () => setCookie
 });
 module.exports = __toCommonJS(browser_exports);
-__reExport(browser_exports, require("./type"), module.exports);
-__reExport(browser_exports, require("./store/localstorage-dispatch-event"), module.exports);
-__reExport(browser_exports, require("./store/type"), module.exports);
-var import_localstorage_dispatch_event = __toESM(require("./store/localstorage-dispatch-event"));
-__reExport(browser_exports, require("./reflect-extend"), module.exports);
-__reExport(browser_exports, require("./string"), module.exports);
-__reExport(browser_exports, require("./type-detection"), module.exports);
-__reExport(browser_exports, require("./hof/compose"), module.exports);
-__reExport(browser_exports, require("./helper"), module.exports);
-__reExport(browser_exports, require("./regular-expression"), module.exports);
-__reExport(browser_exports, require("./validate"), module.exports);
-__reExport(browser_exports, require("./browser"), module.exports);
-__reExport(browser_exports, require("./console"), module.exports);
-__reExport(browser_exports, require("./color"), module.exports);
-__reExport(browser_exports, require("./file"), module.exports);
-__reExport(browser_exports, require("./calc"), module.exports);
-__reExport(browser_exports, require("./dom"), module.exports);
+var import__ = require("..");
+var getCookie = (cookieKey) => {
+  const cookie = {};
+  if (document) {
+    const cookieStr = document.cookie;
+    if (cookieStr) {
+      const cookieMap = cookieStr.split("; ");
+      for (let i = 0; i < cookieMap.length; i++) {
+        const current = cookieMap[i];
+        let [key, value] = current.split("=");
+        try {
+          key = decodeURIComponent(key);
+          value = decodeURIComponent(value);
+        } catch (error) {
+          console.log("value decodeURIComponent error value=" + value);
+        }
+        if (value) {
+          cookie[key] = value;
+        }
+      }
+    }
+  }
+  if (cookieKey) {
+    return cookie[cookieKey];
+  }
+  return cookie;
+};
+var setCookie = (key, value, expires) => {
+  let cookie = encodeURIComponent(key) + "=" + encodeURIComponent(value);
+  if ((0, import__.isNumber)(expires)) {
+    let expiresDate = /* @__PURE__ */ new Date();
+    expiresDate.setTime(expiresDate.getTime() + 24 * 60 * 60 * 1e3 * expires);
+    cookie += ";path=/;expires=" + expiresDate.toUTCString();
+  }
+  document.cookie = cookie;
+};
+var deleteCookie = (key) => {
+  setCookie(key, "", -1);
+};
+function getBrowserType() {
+  const { userAgent } = window.navigator;
+  const isOpera2 = userAgent.indexOf("Opera") > -1;
+  if (isOpera2) {
+    return "Opera";
+  }
+  if (userAgent.indexOf("compatible") > -1 && userAgent.indexOf("MSIE") > -1 && !isOpera2) {
+    return "IE";
+  }
+  if (userAgent.indexOf("Safari") > -1 && userAgent.indexOf("Chrome") === -1) {
+    return "Safari";
+  }
+  if (userAgent.indexOf("Firefox") > -1) {
+    return "Firefox";
+  }
+  if (userAgent.indexOf("Chrome") > -1) {
+    return "Chrome";
+  }
+  return "";
+}
+var isSafari = () => getBrowserType() === "Safari";
+var isChrome = () => getBrowserType() === "Chrome";
+var isFirefox = () => getBrowserType() === "Firefox";
+var isOpera = () => getBrowserType() === "Opera";
+var isIE = () => getBrowserType() === "IE";
 // Annotate the CommonJS export names for ESM import in node:
 0 && (module.exports = {
-  extendStorageMethod,
-  ...require("./type"),
-  ...require("./store/localstorage-dispatch-event"),
-  ...require("./store/type"),
-  ...require("./reflect-extend"),
-  ...require("./string"),
-  ...require("./type-detection"),
-  ...require("./hof/compose"),
-  ...require("./helper"),
-  ...require("./regular-expression"),
-  ...require("./validate"),
-  ...require("./browser"),
-  ...require("./console"),
-  ...require("./color"),
-  ...require("./file"),
-  ...require("./calc"),
-  ...require("./dom")
+  deleteCookie,
+  getBrowserType,
+  getCookie,
+  isChrome,
+  isFirefox,
+  isIE,
+  isOpera,
+  isSafari,
+  setCookie
 });

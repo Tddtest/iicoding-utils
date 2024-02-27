@@ -1,4 +1,4 @@
-import { isNumber, isObject, isString, isBlob } from "..";
+import { isNumber, isObject, isString, isBlob } from "../index";
 
 // copy
 export * from "./copy";

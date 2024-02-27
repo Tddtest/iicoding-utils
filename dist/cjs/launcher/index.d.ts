@@ -1,6 +1,6 @@
 /// <reference types="node" />
 import child_process from 'child_process';
-import type { TFn } from '../../browser';
+import type { TFn } from '../../browserasf';
 export declare const runAsync: (command: string) => Promise<{
     stdout: string;
     stderr: string;

@@ -16,16 +16,17 @@ var __copyProps = (to, from, except, desc) => {
 };
 var __toCommonJS = (mod) => __copyProps(__defProp({}, "__esModule", { value: true }), mod);
 
-// src/browserasf/console/index.ts
+// src/console/index.ts
 var console_exports = {};
 __export(console_exports, {
-  consoleExtend: () => consoleExtend
+  consoleExtend: () => consoleExtend,
+  icdInstance: () => icdInstance
 });
 module.exports = __toCommonJS(console_exports);
 var import__ = require("..");
 var Console = class {
   constructor() {
-    this.console = typeof window ? { log: (...args) => {
+    this.console = typeof window === "undefined" ? { log: (...args) => {
     } } : window.console;
     this.textColorValue = "#fff";
     this.textColorOnce = false;
@@ -186,21 +187,24 @@ var Console = class {
     this.wrapperConsole();
   }
 };
-var consoleInstance = new Console();
+var icdInstance = new Console();
 var consoleExtend = () => {
   if (!console)
     return;
   (0, import__.extendMethodByChain)(console, {
-    log: consoleInstance.log,
-    red: consoleInstance.red,
-    blue: consoleInstance.blue,
-    cyan: consoleInstance.cyan,
-    gray: consoleInstance.gray,
-    green: consoleInstance.green,
-    yellow: consoleInstance.yellow
+    log: icdInstance.log,
+    red: icdInstance.red,
+    blue: icdInstance.blue,
+    cyan: icdInstance.cyan,
+    gray: icdInstance.gray,
+    green: icdInstance.green,
+    color: icdInstance.color,
+    yellow: icdInstance.yellow,
+    textColor: icdInstance.textColor
   });
 };
 // Annotate the CommonJS export names for ESM import in node:
 0 && (module.exports = {
-  consoleExtend
+  consoleExtend,
+  icdInstance
 });

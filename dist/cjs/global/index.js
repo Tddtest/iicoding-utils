@@ -26,21 +26,14 @@ var __toESM = (mod, isNodeMode, target) => (target = mod != null ? __create(__ge
 ));
 var __toCommonJS = (mod) => __copyProps(__defProp({}, "__esModule", { value: true }), mod);
 
-// src/browserasf/calc/index.ts
-var calc_exports = {};
-__export(calc_exports, {
-  add: () => add
+// src/global/index.ts
+var global_exports = {};
+__export(global_exports, {
+  default: () => global_default
 });
-module.exports = __toCommonJS(calc_exports);
-var import_decimal = __toESM(require("decimal.js"));
-var import__ = require("..");
-var add = (...args) => {
-  const effectiveArgs = args.map((arg) => +arg).filter((arg) => (0, import__.isNumber)(arg) && !isNaN(arg));
-  return effectiveArgs.reduce((previousValue, currentValue) => {
-    return import_decimal.default.add(previousValue, currentValue).toNumber();
-  }, 0);
-};
-// Annotate the CommonJS export names for ESM import in node:
-0 && (module.exports = {
-  add
-});
+module.exports = __toCommonJS(global_exports);
+var import_freeGlobal = __toESM(require("./freeGlobal"));
+var freeGlobalThis = typeof globalThis === "object" && globalThis !== null && globalThis.Object === Object && globalThis;
+var freeSelf = typeof self === "object" && self !== null && self.Object === Object && self;
+var root = freeGlobalThis || import_freeGlobal.default || freeSelf || Function("return this")();
+var global_default = root;

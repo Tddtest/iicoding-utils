@@ -16,7 +16,7 @@ var __copyProps = (to, from, except, desc) => {
 };
 var __toCommonJS = (mod) => __copyProps(__defProp({}, "__esModule", { value: true }), mod);
 
-// src/browser/store/BaseStore.ts
+// src/browserasf/store/BaseStore.ts
 var BaseStore_exports = {};
 __export(BaseStore_exports, {
   default: () => BaseStore_default

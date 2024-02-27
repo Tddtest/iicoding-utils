@@ -1,4 +1,4 @@
-import type { TStorageType, ExtendStoreGet, ExtendStoreSet, ExtendStoreSetMore, ExtendStoreGet2Json, ExtendStoreRemove, ExtendStoreClearAll, ExtendStoreRemoveMore } from '@iicoding/utils';
+import type { TStorageType, ExtendStoreGet, ExtendStoreSet, ExtendStoreSetMore, ExtendStoreGet2Json, ExtendStoreRemove, ExtendStoreClearAll, ExtendStoreRemoveMore } from '..';
 interface IExtendMethod {
     get: ExtendStoreGet;
     get2Json: ExtendStoreGet2Json;

@@ -16,7 +16,7 @@ var __copyProps = (to, from, except, desc) => {
 };
 var __toCommonJS = (mod) => __copyProps(__defProp({}, "__esModule", { value: true }), mod);
 
-// src/browserasf/hof/compose.ts
+// src/hof/compose.ts
 var compose_exports = {};
 __export(compose_exports, {
   composeAsync: () => composeAsync

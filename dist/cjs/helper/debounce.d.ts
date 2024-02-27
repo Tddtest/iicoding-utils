@@ -1,4 +1,4 @@
-import { TFn } from '@iicoding/utils';
+import { TFn } from '../index';
 export declare function debounce(func: TFn, wait: number, options: Record<string, any>): {
     (...args: any[]): void;
     cancel: () => void;
